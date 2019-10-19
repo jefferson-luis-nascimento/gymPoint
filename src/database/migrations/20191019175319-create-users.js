@@ -20,7 +20,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      provider: {
+      isAdmin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
+      isStudent: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false,
@@ -34,5 +39,8 @@ module.exports = {
         allowNull: false,
       },
     });
+  },
+  down: queryInterface => {
+    return queryInterface.dropTable('users');
   },
 };

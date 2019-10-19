@@ -20,7 +20,7 @@ module.exports = {
   },
   rules: {
     "prettier/prettier": "error",
-    "class-method-use-this": "off", // não utililiza o this nas classes
+    "class-methods-use-this": "off", // não utililiza o this nas classes
     "no-param-reassign": "off", // permite receber parametros e alterar valores - para o sequelize poder funcionar
     "camelcase": "off", //liberar pra deixar nformato nome_da_variável
     "no-unused-vars": ["error", { "argsIgnorePattern": "next" }] //forçar a variavel next caso esteja sem uso

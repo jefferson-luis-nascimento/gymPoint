@@ -10,7 +10,9 @@ const routes = new Router();
 routes.post('/sessions', SessionController.store);
 routes.use(authMiddleware);
 routes.get('/students/:id', StudentController.index);
-routes.get('/students/', StudentController.show);
+routes.get('/students', StudentController.show);
 routes.post('/students', StudentController.store);
+routes.put('/students/:id', StudentController.update);
+routes.delete('/students/:id', StudentController.delete);
 
 export default routes;

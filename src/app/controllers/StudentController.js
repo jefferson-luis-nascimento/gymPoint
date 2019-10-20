@@ -4,6 +4,12 @@ import Student from '../models/Student';
 
 class StudentController {
   async store(req, res) {
+    const { user } = req;
+
+    if (!user.isAdmin) {
+      return res.status(401).json('User is not allowed to execute this method');
+    }
+
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string()
@@ -25,7 +31,8 @@ class StudentController {
     }
 
     const { name, email, age, weight, height } = req.body;
-    const { userId } = req;
+
+    const userId = user.id;
 
     const student = await Student.findOne({ where: { email } });
 
@@ -78,6 +85,72 @@ class StudentController {
     }
 
     return res.status(404).json({ error: 'Students not found' });
+  }
+
+  async update(req, res) {
+    const { user } = req;
+
+    if (!user.isAdmin) {
+      return res.status(401).json('User is not allowed to execute this method');
+    }
+
+    const schema = Yup.object().shape({
+      name: Yup.string(),
+      email: Yup.string().email(),
+      age: Yup.number().positive(),
+      weight: Yup.number().positive(),
+      height: Yup.number().positive(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Schema validation fails' });
+    }
+
+    const { id } = req.params;
+    const userId = user.id;
+    const { email } = req.body;
+
+    const student = await Student.findByPk(id);
+
+    if (!student) {
+      return res.status(404).json({ error: 'Student not found' });
+    }
+
+    if (email && email !== student.email) {
+      const studentExists = await Student.findOne({ where: { email } });
+
+      if (studentExists) {
+        return res
+          .status(400)
+          .json({ error: 'Email alread exists in another student' });
+      }
+    }
+
+    const newStudent = { ...req.body, userId };
+
+    const { name, age, weight, height } = await student.update(newStudent);
+
+    return res.status(201).json({ id, name, email, age, weight, height });
+  }
+
+  async delete(req, res) {
+    const { user } = req;
+
+    if (!user.isAdmin) {
+      return res.status(401).json('User is not allowed to execute this method');
+    }
+
+    const { id } = req.params;
+
+    const student = await Student.findByPk(id);
+
+    if (student) {
+      Student.destroy({ where: { id } });
+
+      return res.json();
+    }
+
+    return res.status(404).json({ error: 'Student not found' });
   }
 }
 

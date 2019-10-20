@@ -20,12 +20,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      isAdmin: {
+      is_admin: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false,
       },
-      isStudent: {
+      is_student: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false,

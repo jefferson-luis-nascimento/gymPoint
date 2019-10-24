@@ -108,7 +108,91 @@ class EnrollmentController {
       ],
     });
 
+    if (!enrollment) {
+      return res.status(404).json({ error: 'Enrollment not found' });
+    }
+
     return res.json(enrollment);
+  }
+
+  async show(req, res) {
+    const { page = 1 } = req.query;
+
+    const enrollments = await Enrollment.findAll({
+      offset: (page - 1) * 20,
+      limit: 20,
+      attributes: [
+        'id',
+        'start_date',
+        'end_date',
+        'price',
+        'student_id',
+        'plan_id',
+      ],
+      include: [
+        {
+          model: Student,
+          as: 'student',
+          attributes: ['name', 'email', 'birthday', 'age'],
+        },
+        {
+          model: Plan,
+          as: 'plan',
+          attributes: ['title', 'duration', 'price'],
+        },
+      ],
+    });
+
+    return res.json(enrollments);
+  }
+
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      student_id: Yup.number().positive(),
+      plan_id: Yup.number().positive(),
+      start_date: Yup.date(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const { id } = req.params;
+
+    const enrollment = await Enrollment.findByPk(id);
+
+    if (!enrollment) {
+      return res.status(404).json({ error: 'Enrollment not found' });
+    }
+
+    const { student_id, plan_id } = req.body;
+
+    const student = await Student.findByPk(student_id);
+
+    if (!student) {
+      return res.status(404).json({ error: 'Student not found' });
+    }
+
+    const plan = await Plan.findByPk(plan_id);
+
+    if (!plan) {
+      return res.status(404).json({ error: 'Plan not found' });
+    }
+
+    const { totalPrice } = plan;
+
+    const end_date = addMonths(parseISO(req.body.start_date), plan.duration);
+
+    const e = {
+      ...req.body,
+      end_date,
+      price: totalPrice,
+      id,
+    };
+
+    const newEnrollment = await enrollment.update(e);
+
+    return res.json(newEnrollment);
   }
 }
 

@@ -4,12 +4,6 @@ import Student from '../models/Student';
 
 class StudentController {
   async store(req, res) {
-    const { user } = req;
-
-    if (!user.isAdmin) {
-      return res.status(401).json('User is not allowed to execute this method');
-    }
-
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string()
@@ -30,7 +24,7 @@ class StudentController {
 
     const { name, email, birthday, weight, height } = req.body;
 
-    const userId = user.id;
+    const userId = req.user.id;
 
     const student = await Student.findOne({ where: { email } });
 
@@ -56,12 +50,6 @@ class StudentController {
   }
 
   async index(req, res) {
-    const { user } = req;
-
-    if (!user.isAdmin) {
-      return res.status(401).json('User is not allowed to execute this method');
-    }
-
     const { id } = req.params;
 
     const student = await Student.findByPk(id);
@@ -76,12 +64,6 @@ class StudentController {
   }
 
   async show(req, res) {
-    const { user } = req;
-
-    if (!user.isAdmin) {
-      return res.status(401).json('User is not allowed to execute this method');
-    }
-
     const { page = 1 } = req.query;
 
     const students = await Student.findAll({
@@ -106,12 +88,6 @@ class StudentController {
   }
 
   async update(req, res) {
-    const { user } = req;
-
-    if (!user.isAdmin) {
-      return res.status(401).json('User is not allowed to execute this method');
-    }
-
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
@@ -125,7 +101,7 @@ class StudentController {
     }
 
     const { id } = req.params;
-    const userId = user.id;
+    const userId = req.user.id;
     let { email } = req.body;
 
     const student = await Student.findByPk(id);
@@ -158,12 +134,6 @@ class StudentController {
   }
 
   async delete(req, res) {
-    const { user } = req;
-
-    if (!user.isAdmin) {
-      return res.status(401).json('User is not allowed to execute this method');
-    }
-
     const { id } = req.params;
 
     const student = await Student.findByPk(id);

@@ -3,12 +3,6 @@ import Plan from '../models/Plan';
 
 class PlanController {
   async index(req, res) {
-    const { user } = req;
-
-    if (!user.isAdmin) {
-      return res.status(401).json('User is not allowed to execute this method');
-    }
-
     const { id } = req.params;
 
     const plan = await Plan.findByPk(id);
@@ -25,12 +19,6 @@ class PlanController {
   async show(req, res) {
     const { page = 1 } = req.query;
 
-    const { user } = req;
-
-    if (!user.isAdmin) {
-      return res.status(401).json('User is not allowed to execute this method');
-    }
-
     const plans = await Plan.findAll({
       offset: (page - 1) * 20,
       limit: 20,
@@ -41,12 +29,6 @@ class PlanController {
   }
 
   async store(req, res) {
-    const { user } = req;
-
-    if (!user.isAdmin) {
-      return res.status(401).json('User is not allowed to execute this method');
-    }
-
     const schema = Yup.object().shape({
       title: Yup.string()
         .required()
@@ -79,12 +61,6 @@ class PlanController {
   }
 
   async update(req, res) {
-    const { user } = req;
-
-    if (!user.isAdmin) {
-      return res.status(401).json('User is not allowed to execute this method');
-    }
-
     const schema = Yup.object().shape({
       title: Yup.string().min(3),
       duration: Yup.number().positive(),
@@ -109,12 +85,6 @@ class PlanController {
   }
 
   async delete(req, res) {
-    const { user } = req;
-
-    if (!user.isAdmin) {
-      return res.status(401).json('User is not allowed to execute this method');
-    }
-
     const { id } = req.params;
 
     const plan = await Plan.findByPk(id);

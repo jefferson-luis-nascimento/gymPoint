@@ -15,9 +15,7 @@ class StudentController {
       email: Yup.string()
         .email()
         .required(),
-      age: Yup.number()
-        .positive()
-        .required(),
+      birthday: Yup.date().required(),
       weight: Yup.number()
         .positive()
         .required(),
@@ -30,7 +28,7 @@ class StudentController {
       return res.status(400).json({ error: 'Schema validation fails' });
     }
 
-    const { name, email, age, weight, height } = req.body;
+    const { name, email, birthday, weight, height } = req.body;
 
     const userId = user.id;
 
@@ -42,12 +40,13 @@ class StudentController {
 
     const newStudent = await Student.create({ ...req.body, userId });
 
-    const { id } = newStudent;
+    const { id, age } = newStudent;
 
     return res.status(201).json({
       id,
       name,
       email,
+      birthday,
       age,
       weight,
       height,
@@ -55,33 +54,46 @@ class StudentController {
   }
 
   async index(req, res) {
+    const { user } = req;
+
+    if (!user.isAdmin) {
+      return res.status(401).json('User is not allowed to execute this method');
+    }
+
     const { id } = req.params;
 
     const student = await Student.findByPk(id);
 
     if (student) {
-      const { name, email, age, weight, height } = student;
+      const { name, email, birthday, age, weight, height } = student;
 
-      return res.json({ id, name, email, age, weight, height });
+      return res.json({ id, name, email, birthday, age, weight, height });
     }
 
     return res.status(404).json({ error: 'Student not found' });
   }
 
   async show(req, res) {
-    const students = await Student.findAll();
+    const { user } = req;
+
+    if (!user.isAdmin) {
+      return res.status(401).json('User is not allowed to execute this method');
+    }
+
+    const students = await Student.findAll({
+      attributes: [
+        'id',
+        'name',
+        'email',
+        'birthday',
+        'age',
+        'weight',
+        'height',
+      ],
+    });
 
     if (students) {
-      const studentsReturn = students.map(student => ({
-        id: student.id,
-        name: student.name,
-        email: student.email,
-        age: student.age,
-        weight: student.weight,
-        height: student.height,
-      }));
-
-      return res.json(studentsReturn);
+      return res.json(students);
     }
 
     return res.status(404).json({ error: 'Students not found' });
@@ -97,7 +109,7 @@ class StudentController {
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
-      age: Yup.number().positive(),
+      birthday: Yup.date(),
       weight: Yup.number().positive(),
       height: Yup.number().positive(),
     });
@@ -108,7 +120,7 @@ class StudentController {
 
     const { id } = req.params;
     const userId = user.id;
-    const { email } = req.body;
+    let { email } = req.body;
 
     const student = await Student.findByPk(id);
 
@@ -126,11 +138,17 @@ class StudentController {
       }
     }
 
-    const newStudent = { ...req.body, userId };
+    const newStudent = await student.update({ ...req.body, userId });
 
-    const { name, age, weight, height } = await student.update(newStudent);
+    const { name, birthday, age, weight, height } = newStudent;
 
-    return res.status(201).json({ id, name, email, age, weight, height });
+    if (!email) {
+      email = newStudent.email;
+    }
+
+    return res
+      .status(200)
+      .json({ id, name, email, birthday, age, weight, height });
   }
 
   async delete(req, res) {

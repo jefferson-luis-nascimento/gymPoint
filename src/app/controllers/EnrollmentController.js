@@ -35,6 +35,16 @@ class EnrollmentController {
       return res.status(404).json({ error: 'Plan not found' });
     }
 
+    const enrollment = await Enrollment.findOne({
+      where: {
+        student_id,
+      },
+    });
+
+    if (enrollment) {
+      return res.status(400).json({ error: 'Student is already matriculate' });
+    }
+
     const { totalPrice } = plan;
 
     const end_date = addMonths(parseISO(req.body.start_date), plan.duration);
@@ -70,6 +80,35 @@ class EnrollmentController {
     // const enrollment = { ...newEnrollment, end_date, price: totalPrice };
 
     return res.status(201).json(newEnrollment);
+  }
+
+  async index(req, res) {
+    const { id } = req.params;
+
+    const enrollment = await Enrollment.findByPk(id, {
+      attributes: [
+        'id',
+        'start_date',
+        'end_date',
+        'price',
+        'student_id',
+        'plan_id',
+      ],
+      include: [
+        {
+          model: Student,
+          as: 'student',
+          attributes: ['name', 'email', 'birthday', 'age'],
+        },
+        {
+          model: Plan,
+          as: 'plan',
+          attributes: ['title', 'duration', 'price'],
+        },
+      ],
+    });
+
+    return res.json(enrollment);
   }
 }
 

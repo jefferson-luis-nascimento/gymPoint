@@ -38,7 +38,9 @@ class StudentController {
       return res.status(400).json({ error: 'Student already exists' });
     }
 
-    const newStudent = await Student.create({ ...req.body, userId });
+    const s = { ...req.body, user_id: userId };
+
+    const newStudent = await Student.create(s);
 
     const { id, age } = newStudent;
 
@@ -80,7 +82,11 @@ class StudentController {
       return res.status(401).json('User is not allowed to execute this method');
     }
 
+    const { page = 1 } = req.query;
+
     const students = await Student.findAll({
+      offset: (page - 1) * 20,
+      limit: 20,
       attributes: [
         'id',
         'name',

@@ -16,7 +16,6 @@ class Student extends Model {
         },
         weight: Sequelize.DOUBLE,
         height: Sequelize.DOUBLE,
-        userId: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -24,6 +23,10 @@ class Student extends Model {
     );
 
     return this;
+  }
+
+  static associate(models) {
+    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
   }
 }
 

@@ -4,6 +4,8 @@ import { parseISO, addMonths } from 'date-fns';
 import Enrollment from '../models/Enrollment';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
+import EnrollmentMail from '../jobs/EnrollmentMail';
+import Queue from '../../lib/Queue';
 
 class EnrollmentController {
   async store(req, res) {
@@ -77,7 +79,9 @@ class EnrollmentController {
       },
     };
 
-    // const enrollment = { ...newEnrollment, end_date, price: totalPrice };
+    await Queue.add('EnrollmentMail', {
+      newEnrollment,
+    });
 
     return res.status(201).json(newEnrollment);
   }

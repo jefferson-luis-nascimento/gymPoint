@@ -79,7 +79,7 @@ class EnrollmentController {
       },
     };
 
-    await Queue.add('EnrollmentMail', {
+    await Queue.add(EnrollmentMail.key, {
       newEnrollment,
     });
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Form, Input } from '@rocketseat/unform';
 
+import logo from '~/assets/images/logo.png';
 import { Wrapper, Container } from './styles';
 
 export default function SignIn() {
   return (
     <Wrapper>
       <Container>
-        <img src="" alt="" />
-        <strong>GYMPOINT</strong>
+        <img src={logo} alt="GYMPOINT" />
         <Form>
           <label htmlFor="email">SEU E-MAIL</label>
           <Input
@@ -24,6 +24,7 @@ export default function SignIn() {
             name="password"
             placeholder="********"
           />
+          <button type="submit">Entrar no Sistema</button>
         </Form>
       </Container>
     </Wrapper>

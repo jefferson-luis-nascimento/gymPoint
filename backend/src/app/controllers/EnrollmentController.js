@@ -97,6 +97,7 @@ class EnrollmentController {
         'price',
         'student_id',
         'plan_id',
+        'active',
       ],
       include: [
         {
@@ -132,6 +133,7 @@ class EnrollmentController {
         'price',
         'student_id',
         'plan_id',
+        'active',
       ],
       include: [
         {

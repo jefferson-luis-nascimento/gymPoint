@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 
 import Student from '../models/Student';
@@ -64,9 +65,19 @@ class StudentController {
   }
 
   async show(req, res) {
-    const { page = 1 } = req.query;
+    const { page = 1, name = '' } = req.query;
+    let where = {};
+
+    if (name.length > 0) {
+      where = {
+        name: {
+          [Op.like]: `%${name}%`,
+        },
+      };
+    }
 
     const students = await Student.findAll({
+      where,
       offset: (page - 1) * 20,
       limit: 20,
       attributes: [

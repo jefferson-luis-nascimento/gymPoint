@@ -22,16 +22,16 @@ export default function Routes() {
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/enrollment" component={Enrollment} isPrivate />
       <Route
-        path="/enrolment/register"
+        path="/enrollment-register"
         component={EnrollmentRegister}
         isPrivate
       />
       <Route path="/helpOrder" component={HelpOrder} isPrivate />
-      <Route path="/helpOrder/answer" component={HelpOrderAnswer} isPrivate />
+      <Route path="/helpOrder-answer" component={HelpOrderAnswer} isPrivate />
       <Route path="/plan" component={Plan} isPrivate />
-      <Route path="/plan/register" component={PlanRegister} isPrivate />
+      <Route path="/plan-register" component={PlanRegister} isPrivate />
       <Route path="/student" component={Student} isPrivate />
-      <Route path="/student/register" component={StudentRegister} isPrivate />
+      <Route path="/student-register" component={StudentRegister} isPrivate />
     </Switch>
   );
 }

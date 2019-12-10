@@ -4,14 +4,17 @@ import { MdAdd } from 'react-icons/md';
 import {
   Container,
   Content,
+  HeaderLabel,
+  Table,
+  BlueButton,
+  RedButton,
+} from '~/styles/stylesGlobal';
+import {
   Header,
   Filter,
   ButtonFilterRegister,
   FilterInput,
   Search,
-  StudentsTable,
-  EditButton,
-  DeleteButton,
 } from './styles';
 
 export default function Student() {
@@ -19,7 +22,7 @@ export default function Student() {
     <Container>
       <Content>
         <Header>
-          <strong>Gerenciando Alunos</strong>
+          <HeaderLabel>Gerenciando Alunos</HeaderLabel>
           <Filter>
             <ButtonFilterRegister>
               <div>
@@ -33,7 +36,7 @@ export default function Student() {
             </FilterInput>
           </Filter>
         </Header>
-        <StudentsTable>
+        <Table>
           <thead>
             <tr>
               <th>NOME</th>
@@ -56,28 +59,10 @@ export default function Student() {
               </td>
               <td />
               <td>
-                <EditButton>editar</EditButton>
+                <BlueButton>editar</BlueButton>
               </td>
               <td>
-                <DeleteButton>apagar</DeleteButton>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Cha Ji-Hun</strong>
-              </td>
-              <td>
-                <strong>exemplo@email.com</strong>
-              </td>
-              <td>
-                <strong>20</strong>
-              </td>
-              <td />
-              <td>
-                <EditButton>editar</EditButton>
-              </td>
-              <td>
-                <DeleteButton>apagar</DeleteButton>
+                <RedButton>apagar</RedButton>
               </td>
             </tr>
             <tr>
@@ -92,14 +77,32 @@ export default function Student() {
               </td>
               <td />
               <td>
-                <EditButton>editar</EditButton>
+                <BlueButton>editar</BlueButton>
               </td>
               <td>
-                <DeleteButton>apagar</DeleteButton>
+                <RedButton>apagar</RedButton>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Cha Ji-Hun</strong>
+              </td>
+              <td>
+                <strong>exemplo@email.com</strong>
+              </td>
+              <td>
+                <strong>20</strong>
+              </td>
+              <td />
+              <td>
+                <BlueButton>editar</BlueButton>
+              </td>
+              <td>
+                <RedButton>apagar</RedButton>
               </td>
             </tr>
           </tbody>
-        </StudentsTable>
+        </Table>
       </Content>
     </Container>
   );

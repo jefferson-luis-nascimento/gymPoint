@@ -11,7 +11,8 @@ export const Content = styled.div`
   max-width: 900px;
   margin: 0 auto;
   display: flex;
-  background: #fff;
+  flex-direction: column;
+  border-radius: 4px;
 `;
 
 export const Header = styled.nav`
@@ -83,4 +84,40 @@ export const Search = styled(MdSearch).attrs({
   position: absolute;
   left: 8px;
   top: 8px;
+`;
+
+export const StudentsTable = styled.table`
+  border: none;
+  border-radius: 4px;
+  background: #fff;
+  padding: 15px;
+
+  tr th {
+    font-size: 16px;
+    color: #444;
+    text-align: left;
+    padding-bottom: 20px;
+  }
+
+  tr td {
+    font-size: 16px;
+    color: #666;
+    text-align: left;
+    line-height: 20px;
+    padding: 5px 0;
+  }
+`;
+
+export const EditButton = styled.button`
+  border: none;
+  background: none;
+  color: #4d85ee;
+  font-size: 15px;
+`;
+
+export const DeleteButton = styled.button`
+  border: none;
+  background: none;
+  color: #de3b3b;
+  font-size: 15px;
 `;

@@ -9,6 +9,9 @@ import {
   ButtonFilterRegister,
   FilterInput,
   Search,
+  StudentsTable,
+  EditButton,
+  DeleteButton,
 } from './styles';
 
 export default function Student() {
@@ -30,6 +33,73 @@ export default function Student() {
             </FilterInput>
           </Filter>
         </Header>
+        <StudentsTable>
+          <thead>
+            <tr>
+              <th>NOME</th>
+              <th>E-MAIL</th>
+              <th>IDADE</th>
+              <th> </th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>Cha Ji-Hun</strong>
+              </td>
+              <td>
+                <strong>exemplo@email.com</strong>
+              </td>
+              <td>
+                <strong>20</strong>
+              </td>
+              <td />
+              <td>
+                <EditButton>editar</EditButton>
+              </td>
+              <td>
+                <DeleteButton>apagar</DeleteButton>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Cha Ji-Hun</strong>
+              </td>
+              <td>
+                <strong>exemplo@email.com</strong>
+              </td>
+              <td>
+                <strong>20</strong>
+              </td>
+              <td />
+              <td>
+                <EditButton>editar</EditButton>
+              </td>
+              <td>
+                <DeleteButton>apagar</DeleteButton>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Cha Ji-Hun</strong>
+              </td>
+              <td>
+                <strong>exemplo@email.com</strong>
+              </td>
+              <td>
+                <strong>20</strong>
+              </td>
+              <td />
+              <td>
+                <EditButton>editar</EditButton>
+              </td>
+              <td>
+                <DeleteButton>apagar</DeleteButton>
+              </td>
+            </tr>
+          </tbody>
+        </StudentsTable>
       </Content>
     </Container>
   );

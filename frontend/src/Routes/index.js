@@ -8,7 +8,6 @@ import Dashboard from '~/pages/Dashboard';
 import Enrollment from '~/pages/Enrollment';
 import EnrollmentRegister from '~/pages/Enrollment/Register';
 import HelpOrder from '~/pages/HelpOrder';
-import HelpOrderAnswer from '~/pages/HelpOrder/Answer';
 import Plan from '~/pages/Plan';
 import PlanRegister from '~/pages/Plan/Register';
 import Student from '~/pages/Student';
@@ -27,7 +26,6 @@ export default function Routes() {
         isPrivate
       />
       <Route path="/helpOrder" component={HelpOrder} isPrivate />
-      <Route path="/helpOrder-answer" component={HelpOrderAnswer} isPrivate />
       <Route path="/plan" component={Plan} isPrivate />
       <Route path="/plan-register" component={PlanRegister} isPrivate />
       <Route path="/student" component={Student} isPrivate />

@@ -68,3 +68,78 @@ export const RedButton = styled.button`
     color: ${darken(0.2, '#de3b3b')};
   }
 `;
+
+export const Header = styled.nav`
+  display: flex;
+  flex-direction: row;
+  background: #eee;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+export const HeaderOptions = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ButtonRegister = styled.button`
+  justify-content: center;
+  align-items: center;
+  border: none;
+  margin-right: 30px;
+  border-radius: 4px;
+  background: #ee4d64;
+  padding: 5px 20px;
+  height: 34px;
+
+  &:hover {
+    color: ${darken(0.2, '#ee4d64')};
+  }
+
+  div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      font-weight: bold;
+      font-size: 14px;
+      color: #fff;
+      padding-left: 10px;
+    }
+  }
+`;
+
+export const ButtonBack = styled.button.attrs({
+  type: 'button',
+})`
+  justify-content: center;
+  align-items: center;
+  border: none;
+  margin-right: 30px;
+  border-radius: 4px;
+  background: #aaa;
+  padding: 5px 20px;
+  height: 34px;
+
+  &:hover {
+    color: ${darken(0.2, '#aaa')};
+  }
+
+  div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      font-weight: bold;
+      font-size: 14px;
+      color: #fff;
+      padding-left: 10px;
+    }
+  }
+`;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { MdAdd } from 'react-icons/md';
+import PropTypes from 'prop-types';
 
 import {
   Container,
@@ -8,33 +9,34 @@ import {
   Table,
   BlueButton,
   RedButton,
-} from '~/styles/stylesGlobal';
-import {
   Header,
-  Filter,
-  ButtonFilterRegister,
-  FilterInput,
-  Search,
-} from './styles';
+  HeaderOptions,
+  ButtonRegister,
+} from '~/styles/stylesGlobal';
+import { FilterInput, Search } from './styles';
 
-export default function Student() {
+export default function Student({ history }) {
+  function handleRegister() {
+    history.push('/student-register');
+  }
+
   return (
     <Container>
       <Content>
         <Header>
           <HeaderLabel>Gerenciando Alunos</HeaderLabel>
-          <Filter>
-            <ButtonFilterRegister>
+          <HeaderOptions>
+            <ButtonRegister onClick={handleRegister}>
               <div>
                 <MdAdd size={20} color="#fff" />
                 <span>CADASTRAR</span>
               </div>
-            </ButtonFilterRegister>
+            </ButtonRegister>
             <FilterInput>
               <input type="text" placeholder="Buscar Aluno" />
               <Search />
             </FilterInput>
-          </Filter>
+          </HeaderOptions>
         </Header>
         <Table>
           <thead>
@@ -108,3 +110,9 @@ export default function Student() {
     </Container>
   );
 }
+
+Student.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};

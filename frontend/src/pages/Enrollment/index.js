@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { MdAdd, MdCheckCircle } from 'react-icons/md';
 
 import {
@@ -8,23 +9,28 @@ import {
   Table,
   BlueButton,
   RedButton,
+  Header,
+  HeaderOptions,
+  ButtonRegister,
 } from '~/styles/stylesGlobal';
-import { Header, Filter, ButtonFilterRegister } from './styles';
 
-export default function Enrollment() {
+export default function Enrollment({ history }) {
+  function handleRegister() {
+    history.push('./enrollment-register');
+  }
   return (
     <Container>
       <Content>
         <Header>
           <HeaderLabel>Gerenciando matrículas</HeaderLabel>
-          <Filter>
-            <ButtonFilterRegister>
+          <HeaderOptions>
+            <ButtonRegister onClick={handleRegister}>
               <div>
                 <MdAdd size={20} color="#fff" />
                 <span>CADASTRAR</span>
               </div>
-            </ButtonFilterRegister>
-          </Filter>
+            </ButtonRegister>
+          </HeaderOptions>
         </Header>
         <Table>
           <thead>
@@ -141,3 +147,9 @@ export default function Enrollment() {
     </Container>
   );
 }
+
+Enrollment.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};

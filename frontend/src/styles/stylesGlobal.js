@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
-import { Input } from '@rocketseat/unform';
+import { Input, Select } from '@rocketseat/unform';
 
 export const Container = styled.div`
   background: #eee;
@@ -171,6 +171,7 @@ export const FormControl = styled.div`
     margin-bottom: 10px;
     font-size: 16px;
     color: #444;
+    height: 34px;
 
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
@@ -196,6 +197,16 @@ export const FormControl = styled.div`
     flex-direction: row;
     justify-content: space-between;
   }
+`;
+
+export const SelectUnform = styled(Select)`
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 6px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #444;
+  background: #fff;
 `;
 
 export const FormDiv = styled.div`

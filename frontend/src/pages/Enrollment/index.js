@@ -53,7 +53,7 @@ export default function Enrollment() {
                 <strong>30 de Maio de 2019</strong>
               </td>
               <td>
-                <MdCheckCircle size={20} color="#0f0" />
+                <MdCheckCircle size={20} color="#42cb59" />
               </td>
               <td />
               <td>
@@ -77,7 +77,7 @@ export default function Enrollment() {
                 <strong>30 de Maio de 2019</strong>
               </td>
               <td>
-                <MdCheckCircle size={20} color="#0f0" />
+                <MdCheckCircle size={20} color="#42cb59" />
               </td>
               <td />
               <td>
@@ -125,7 +125,7 @@ export default function Enrollment() {
                 <strong>30 de Maio de 2019</strong>
               </td>
               <td>
-                <MdCheckCircle size={20} color="#0f0" />
+                <MdCheckCircle size={20} color="#42cb59" />
               </td>
               <td />
               <td>

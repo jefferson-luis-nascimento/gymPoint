@@ -52,15 +52,13 @@ export const Content = styled.div`
 
   aside {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
   }
 `;
 
 export const Profile = styled.div`
-  display: flex;
   margin-left: 20px;
   padding-left: 20px;
-  border-left: 1px solid #eee;
 
   div {
     text-align: right;

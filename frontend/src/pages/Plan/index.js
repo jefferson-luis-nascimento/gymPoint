@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { MdAdd } from 'react-icons/md';
 
 import {
@@ -8,23 +9,29 @@ import {
   Table,
   BlueButton,
   RedButton,
+  Header,
+  HeaderOptions,
+  ButtonRegister,
 } from '~/styles/stylesGlobal';
-import { Header, Filter, ButtonFilterRegister } from './styles';
 
-export default function Plan() {
+export default function Plan({ history }) {
+  function handleRegister() {
+    history.push('./plan-register');
+  }
+
   return (
     <Container>
       <Content>
         <Header>
           <HeaderLabel>Gerenciando planos</HeaderLabel>
-          <Filter>
-            <ButtonFilterRegister>
+          <HeaderOptions>
+            <ButtonRegister onClick={handleRegister}>
               <div>
                 <MdAdd size={20} color="#fff" />
                 <span>CADASTRAR</span>
               </div>
-            </ButtonFilterRegister>
-          </Filter>
+            </ButtonRegister>
+          </HeaderOptions>
         </Header>
         <Table>
           <thead>
@@ -97,3 +104,9 @@ export default function Plan() {
     </Container>
   );
 }
+
+Plan.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};

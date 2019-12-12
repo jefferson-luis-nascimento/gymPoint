@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
+import { Input } from '@rocketseat/unform';
 
 export const Container = styled.div`
   background: #eee;
@@ -93,9 +94,10 @@ export const ButtonRegister = styled.button`
   background: #ee4d64;
   padding: 5px 20px;
   height: 34px;
+  transition: color 0.2s;
 
   &:hover {
-    color: ${darken(0.2, '#ee4d64')};
+    color: ${darken(0.5, '#ee4d64')};
   }
 
   div {
@@ -124,6 +126,7 @@ export const ButtonBack = styled.button.attrs({
   background: #aaa;
   padding: 5px 20px;
   height: 34px;
+  transition: color 0.2s;
 
   &:hover {
     color: ${darken(0.2, '#aaa')};
@@ -142,4 +145,71 @@ export const ButtonBack = styled.button.attrs({
       padding-left: 10px;
     }
   }
+`;
+
+export const FormControl = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  background: #fff;
+  padding: 30px;
+
+  label {
+    font-size: 14px;
+    color: #444;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  input {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #444;
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type='number'] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  span {
+    color: #ee4d64;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+`;
+
+export const FormDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 20px 0 0;
+`;
+
+export const FormDivWithoutPadding = styled(FormDiv)`
+  padding-right: 0;
+`;
+
+export const InputReadOnly = styled(Input)`
+  background: #eee;
+  color: #444;
 `;

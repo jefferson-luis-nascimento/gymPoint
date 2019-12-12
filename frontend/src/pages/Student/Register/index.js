@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { MdCheck, MdKeyboardArrowLeft } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
@@ -11,8 +12,10 @@ import {
   HeaderOptions,
   ButtonBack,
   ButtonRegister,
+  FormControl,
+  FormDiv,
+  FormDivWithoutPadding,
 } from '~/styles/stylesGlobal';
-import { FormControl, FormDiv } from './styles';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -36,9 +39,13 @@ const schema = Yup.object().shape({
     .required('Altura é obrigatório'),
 });
 
-export default function Student() {
+export default function Register({ history }) {
   function handleSubmit(data) {
     console.tron.log(data);
+  }
+
+  function handleBack() {
+    history.push('/student');
   }
 
   return (
@@ -48,7 +55,7 @@ export default function Student() {
           <Header>
             <HeaderLabel>Cadastro de alunos</HeaderLabel>
             <HeaderOptions>
-              <ButtonBack>
+              <ButtonBack onClick={handleBack}>
                 <div>
                   <MdKeyboardArrowLeft size={20} color="#fff" />
                   <span>VOLTAR</span>
@@ -81,11 +88,10 @@ export default function Student() {
                 <label htmlFor="weight">PESO (em kg)</label>
                 <Input name="weight" id="weight" type="number" />
               </FormDiv>
-
-              <FormDiv>
+              <FormDivWithoutPadding>
                 <label htmlFor="height">ALTURA</label>
                 <Input name="height" id="height" type="number" />
-              </FormDiv>
+              </FormDivWithoutPadding>
             </div>
           </FormControl>
         </Form>
@@ -93,3 +99,9 @@ export default function Student() {
     </Container>
   );
 }
+
+Register.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};

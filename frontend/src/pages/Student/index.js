@@ -44,6 +44,7 @@ export default function Student() {
               <th>IDADE</th>
               <th> </th>
               <th> </th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>

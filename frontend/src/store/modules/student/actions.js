@@ -1,13 +1,13 @@
-export function getAllRequest(page = 1, name) {
+export function addRequest(name, email, birthday, weight, height, user_id) {
   return {
-    type: '@student/GET_ALL_REQUEST',
-    payload: { page, name },
+    type: '@student/ADD_REQUEST',
+    payload: { name, email, birthday, weight, height, user_id },
   };
 }
 
-export function getAllSuccess(students) {
+export function addSuccess(students) {
   return {
-    type: '@student/GET_ALL_SUCCESS',
+    type: '@student/ADD_SUCCESS',
     payload: { students },
   };
 }

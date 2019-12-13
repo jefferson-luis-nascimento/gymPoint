@@ -1,24 +1,40 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
+import { differenceInCalendarYears } from 'date-fns';
 
 import api from '~/services/api';
-// import history from '~/services/history';
+import history from '~/services/history';
 
-import { getAllSuccess, failure } from './actions';
+import { addSuccess, failure } from './actions';
 
-export function* getAll({ payload }) {
+export function* add({ payload }) {
   try {
-    const { page, name } = payload;
+    const { name, email, birthday, weight, height, user_id } = payload;
 
-    const response = yield call(api.get, 'students', { query: { page, name } });
+    const student = {
+      name,
+      email,
+      birthday,
+      weight,
+      height,
+      user_id,
+    };
 
-    const students = response.data;
+    yield call(api.post, 'students', student);
 
-    yield put(getAllSuccess(students));
+    yield put(
+      addSuccess({
+        ...student,
+        age: differenceInCalendarYears(new Date(), birthday),
+      })
+    );
+
+    toast.success('Aluno gravado com sucesso!');
+    history.push('/student');
   } catch (error) {
-    toast.error('Não foi possível carregar os alunos');
+    toast.error('Não foi possível adicionar o aluno');
     yield put(failure());
   }
 }
 
-export default all([takeLatest('@student/GET_ALL_REQUEST', getAll)]);
+export default all([takeLatest('@student/ADD_REQUEST', add)]);

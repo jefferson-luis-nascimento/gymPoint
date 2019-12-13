@@ -1,23 +1,25 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-  page: 1,
   name: '',
+  email: '',
+  birthDate: new Date(),
+  weight: 0,
+  height: 0,
   loading: false,
-  students: null,
 };
 
 export default function student(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@student/GET_ALL_REQUEST': {
+      case '@student/ADD_REQUEST': {
         draft.loading = true;
         break;
       }
-      case '@student/GET_ALL_SUCCESS': {
+      case '@student/ADD_SUCCESS': {
         draft.loading = false;
-        draft.students = action.payload.students;
-        console.tron.warn(draft.students);
+        draft.student = action.payload.student;
+        console.tron.warn(draft.student);
         break;
       }
       case '@student/FAILURE': {

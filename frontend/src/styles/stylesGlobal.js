@@ -224,3 +224,17 @@ export const InputReadOnly = styled(Input)`
   background: #eee;
   color: #444;
 `;
+
+export const EmptyList = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: #444;
+  background: #fff;
+  border: none;
+  border-radius: 4px;
+  max-height: 400px;
+  height: 400px;
+`;

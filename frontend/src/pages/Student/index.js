@@ -29,9 +29,9 @@ export default function Student({ history }) {
 
   useEffect(() => {
     async function loadStudents() {
-      const response = await api.get('/students', { query: { name, page } });
+      const response = await api.get('/students', { params: { name, page } });
 
-      console.tron.log(response.data, name, page);
+      console.tron.log(response, name, page);
       setStudents(response.data);
     }
 

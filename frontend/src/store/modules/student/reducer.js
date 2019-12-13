@@ -22,6 +22,14 @@ export default function student(state = INITIAL_STATE, action) {
         console.tron.warn(draft.student);
         break;
       }
+      case '@student/LOAD_REQUEST': {
+        draft.loading = false;
+        break;
+      }
+      case '@student/LOAD_SUCCESS': {
+        draft.loading = false;
+        break;
+      }
       case '@student/FAILURE': {
         draft.loading = false;
         break;

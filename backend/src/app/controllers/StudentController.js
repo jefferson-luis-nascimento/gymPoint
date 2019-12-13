@@ -71,7 +71,7 @@ class StudentController {
     if (name.length > 0) {
       where = {
         name: {
-          [Op.like]: `%${name}%`,
+          [Op.iLike]: `%${name}%`,
         },
       };
     }

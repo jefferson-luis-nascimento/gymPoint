@@ -78,6 +78,7 @@ class StudentController {
 
     const students = await Student.findAll({
       where,
+      order: [['id', 'ASC'], ['name', 'ASC']],
       offset: (page - 1) * 20,
       limit: 20,
       attributes: [

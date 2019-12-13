@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { MdAdd } from 'react-icons/md';
 import PropTypes from 'prop-types';
 
@@ -17,11 +18,14 @@ import {
 import { FilterInput, Search } from './styles';
 
 import api from '~/services/api';
+import { loadRequest } from '~/store/modules/student/actions';
 
 export default function Student({ history }) {
   const [name, setName] = useState('');
   const [page, setPage] = useState(1);
   const [students, setStudents] = useState([]);
+
+  const dispatch = useDispatch();
 
   const studentsCount = useMemo(() => {
     return students.length;
@@ -34,7 +38,7 @@ export default function Student({ history }) {
       console.tron.log(response, name, page);
       setStudents(response.data);
     }
-
+    setPage(1);
     loadStudents();
   }, [name, page]);
 
@@ -44,6 +48,11 @@ export default function Student({ history }) {
 
   function handleInputChange(e) {
     setName(e.target.value);
+  }
+
+  function handleEdit(id) {
+    console.tron.log(id);
+    dispatch(loadRequest(id));
   }
 
   return (
@@ -94,7 +103,9 @@ export default function Student({ history }) {
                   </td>
                   <td />
                   <td>
-                    <BlueButton>editar</BlueButton>
+                    <BlueButton onClick={() => handleEdit(student.id)}>
+                      editar
+                    </BlueButton>
                   </td>
                   <td>
                     <RedButton>apagar</RedButton>

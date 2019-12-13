@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import * as moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { MdCheck, MdKeyboardArrowLeft } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
@@ -20,7 +20,11 @@ import {
   FormDivWithoutPadding,
 } from '~/styles/stylesGlobal';
 
-import { addRequest } from '~/store/modules/student/actions';
+import {
+  addRequest,
+  updateRequest,
+  cancel,
+} from '~/store/modules/student/actions';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -29,7 +33,7 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .email('Insira um e-mail válido')
     .required('E-mail é obrigatório'),
-  birthDay: Yup.date('Data de aniversário inválida').required(
+  birthday: Yup.date('Data de aniversário inválida').required(
     'Data de aniversário é obrigatório'
   ),
   weight: Yup.number('Peso inválido')
@@ -42,25 +46,43 @@ const schema = Yup.object().shape({
     .required('Altura é obrigatório'),
 });
 
-export default function Register({ history }) {
+export default function Register() {
   const user_id = useSelector(state => state.user.profile.user_id);
-  const student = useSelector(state => state.student);
+  const student = useSelector(state => state.student.student);
+  const loading = useSelector(state => state.student.loading);
+  const newStudent = useSelector(state => state.student.new);
+  const { id } = student;
   const dispatch = useDispatch();
 
   const [age, setAge] = useState(student.age);
+  const [birthday, setBirthday] = useState(student.birthday);
 
-  async function handleSubmit({ name, email, birthDay, weight, height }) {
-    dispatch(addRequest(name, email, birthDay, weight, height, user_id));
+  useEffect(() => {
+    console.tron.log('Data', student.birthday);
+    const value =
+      differenceInCalendarYears(new Date(), parseISO(student.birthday)) || 0;
+    setAge(value);
+  }, [student.birthday]);
+
+  async function handleSubmit({ name, email, weight, height }) {
+    if (newStudent) {
+      dispatch(addRequest(name, email, birthday, weight, height, user_id));
+    } else {
+      dispatch(
+        updateRequest(id, name, email, birthday, weight, height, user_id)
+      );
+    }
   }
 
   function handleBack() {
-    history.push('/student');
+    dispatch(cancel());
   }
 
-  function handleChangeBirthDay(e) {
+  function handleChangebirthday(e) {
     const value =
       differenceInCalendarYears(new Date(), parseISO(e.target.value)) || 0;
     setAge(value);
+    setBirthday(e.target.value);
   }
 
   return (
@@ -79,7 +101,7 @@ export default function Register({ history }) {
               <ButtonRegister type="submit">
                 <div>
                   <MdCheck size={20} color="#fff" />
-                  <span>{student.loading ? '...GRAVANDO' : 'SALVAR'}</span>
+                  <span>{loading ? '...GRAVANDO' : 'SALVAR'}</span>
                 </div>
               </ButtonRegister>
             </HeaderOptions>
@@ -97,12 +119,13 @@ export default function Register({ history }) {
             />
             <div>
               <FormDiv>
-                <label htmlFor="birthDay">DATE DE NASCIMENTO</label>
+                <label htmlFor="birthday">DATE DE NASCIMENTO</label>
                 <Input
-                  onChange={e => handleChangeBirthDay(e)}
-                  name="birthDay"
-                  id="birthDay"
+                  onChange={e => handleChangebirthday(e)}
+                  name="birthday"
+                  id="birthday"
                   type="date"
+                  value={moment(birthday).format('YYYY-MM-DD')}
                 />
               </FormDiv>
               <FormDiv>
@@ -130,9 +153,3 @@ export default function Register({ history }) {
     </Container>
   );
 }
-
-Register.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};

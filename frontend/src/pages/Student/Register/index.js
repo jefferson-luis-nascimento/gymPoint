@@ -58,7 +58,6 @@ export default function Register() {
   const [birthday, setBirthday] = useState(student.birthday);
 
   useEffect(() => {
-    console.tron.log('Data', student.birthday);
     const value =
       differenceInCalendarYears(new Date(), parseISO(student.birthday)) || 0;
     setAge(value);

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { MdCheck, MdKeyboardArrowLeft } from 'react-icons/md';
@@ -18,6 +19,9 @@ import {
   InputReadOnly,
 } from '~/styles/stylesGlobal';
 
+import { formatPrice } from '~/util/format';
+import { addRequest, updateRequest } from '~/store/modules/plan/actions';
+
 const schema = Yup.object().shape({
   title: Yup.string()
     .min(2, 'Título do plano tem que ter no mínimo 2 caracteres')
@@ -33,8 +37,28 @@ const schema = Yup.object().shape({
 });
 
 export default function Register({ history }) {
-  function handleSubmit(data) {
-    console.tron.log(data);
+  const dispatch = useDispatch();
+  const [plan, setPlan] = useState(useSelector(state => state.plan.plan));
+  const { id } = plan;
+  const loading = useSelector(state => state.plan.loading);
+  const newPlan = useSelector(state => state.plan.newPlan);
+
+  const totalPrice = useMemo(() => {
+    formatPrice(plan.duration * plan.price);
+  }, [plan.duration, plan.price]);
+
+  async function handleTitleChange(title) {
+    console.tron.log(title);
+    await setPlan({ ...plan, title });
+    console.tron.log(plan);
+  }
+
+  function handleSubmit({ title, duration, price }) {
+    if (newPlan) {
+      dispatch(addRequest(title, duration, price));
+    } else {
+      dispatch(updateRequest(id, title, duration, price));
+    }
   }
 
   function handleBack() {
@@ -44,7 +68,7 @@ export default function Register({ history }) {
   return (
     <Container>
       <Content>
-        <Form schema={schema} onSubmit={handleSubmit}>
+        <Form initialData={plan} schema={schema} onSubmit={handleSubmit}>
           <Header>
             <HeaderLabel>Cadastro de plano</HeaderLabel>
             <HeaderOptions>
@@ -57,26 +81,46 @@ export default function Register({ history }) {
               <ButtonRegister type="submit">
                 <div>
                   <MdCheck size={20} color="#fff" />
-                  <span>SALVAR</span>
+                  <span>{loading ? '...GRAVANDO' : 'SALVAR'}</span>
                 </div>
               </ButtonRegister>
             </HeaderOptions>
           </Header>
           <FormControl>
             <label htmlFor="title">TÍTULO DO PLANO</label>
-            <Input name="title" id="title" type="text" />
+            <Input
+              name="title"
+              id="title"
+              type="text"
+              onChange={e => handleTitleChange(e.target.value)}
+            />
             <div>
               <FormDiv>
                 <label htmlFor="duration">DURAÇÃO (em meses)</label>
-                <Input name="duration" id="duration" type="number" />
+                <Input
+                  name="duration"
+                  id="duration"
+                  type="text"
+                  onChange={e => setPlan({ ...plan, duration: e.target.value })}
+                />
               </FormDiv>
               <FormDiv>
                 <label htmlFor="price">PREÇO MENSAL</label>
-                <Input name="price" id="price" type="number" />
+                <Input
+                  name="price"
+                  id="price"
+                  type="text"
+                  onChange={e => setPlan({ ...plan, price: e.target.value })}
+                />
               </FormDiv>
               <FormDivWithoutPadding>
                 <label htmlFor="totalPrice">PREÇO TOTAL</label>
-                <InputReadOnly name="totalPrice" id="totalPrice" readOnly />
+                <InputReadOnly
+                  value={totalPrice}
+                  name="totalPrice"
+                  id="totalPrice"
+                  readOnly
+                />
               </FormDivWithoutPadding>
             </div>
           </FormControl>

@@ -94,10 +94,10 @@ export const ButtonRegister = styled.button`
   background: #ee4d64;
   padding: 5px 20px;
   height: 34px;
-  transition: color 0.2s;
+  transition: background 0.2s;
 
   &:hover {
-    color: ${darken(0.5, '#ee4d64')};
+    background: ${darken(0.2, '#ee4d64')};
   }
 
   div {
@@ -126,10 +126,10 @@ export const ButtonBack = styled.button.attrs({
   background: #aaa;
   padding: 5px 20px;
   height: 34px;
-  transition: color 0.2s;
+  transition: background 0.2s;
 
   &:hover {
-    color: ${darken(0.2, '#aaa')};
+    background: ${darken(0.2, '#aaa')};
   }
 
   div {

@@ -11,18 +11,19 @@ class PlanController {
       return res.status(404).json({ error: 'Plan not found' });
     }
 
-    const { title, durantion, price } = plan;
+    const { title, duration, price } = plan;
 
-    return res.json({ id, title, durantion, price });
+    return res.json({ id, title, duration, price });
   }
 
   async show(req, res) {
     const { page = 1 } = req.query;
 
     const plans = await Plan.findAll({
+      order: [['id', 'ASC'], ['title', 'ASC']],
       offset: (page - 1) * 20,
       limit: 20,
-      attributes: ['id', 'title', 'duration', 'price'],
+      attributes: ['id', 'title', 'duration', 'price', 'totalPrice'],
     });
 
     return res.json(plans);

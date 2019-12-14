@@ -15,6 +15,7 @@ import {
 } from './actions';
 
 function loadFormattedPrice(plan) {
+  console.tron.log('Convertendo Plan', plan);
   return {
     ...plan,
     priceFormatted: formatPrice(plan.price),

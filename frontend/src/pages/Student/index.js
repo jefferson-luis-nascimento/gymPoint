@@ -48,7 +48,6 @@ export default function Student({ history }) {
   }
 
   function handleEdit(id) {
-    console.tron.log(id);
     dispatch(loadRequest(id));
   }
 
@@ -56,7 +55,7 @@ export default function Student({ history }) {
     const answer = window.confirm('Deseja realmente excluir esse aluno?');
 
     if (answer) {
-      await dispatch(deleteRequest(id));
+      dispatch(deleteRequest(id));
     }
   }
 

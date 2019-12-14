@@ -77,7 +77,7 @@ export default function Register() {
     dispatch(cancel());
   }
 
-  function handleChangebirthday(e) {
+  function handleChangeBirthday(e) {
     const value =
       differenceInCalendarYears(new Date(), parseISO(e.target.value)) || 0;
     setAge(value);
@@ -120,7 +120,7 @@ export default function Register() {
               <FormDiv>
                 <label htmlFor="birthday">DATE DE NASCIMENTO</label>
                 <Input
-                  onChange={e => handleChangebirthday(e)}
+                  onChange={e => handleChangeBirthday(e)}
                   name="birthday"
                   id="birthday"
                   type="date"

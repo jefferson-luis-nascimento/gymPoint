@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
@@ -38,19 +38,24 @@ const schema = Yup.object().shape({
 
 export default function Register({ history }) {
   const dispatch = useDispatch();
-  const [plan, setPlan] = useState(useSelector(state => state.plan.plan));
+  const plan = useSelector(state => state.plan.plan);
   const { id } = plan;
   const loading = useSelector(state => state.plan.loading);
   const newPlan = useSelector(state => state.plan.newPlan);
+  const [durationCalc, setDurationCalc] = useState(plan.duration);
+  const [priceCalc, setPriceCalc] = useState(plan.price);
 
   const totalPrice = useMemo(() => {
-    formatPrice(plan.duration * plan.price);
-  }, [plan.duration, plan.price]);
+    console.tron.log(durationCalc, priceCalc);
+    return formatPrice(durationCalc * priceCalc);
+  }, [durationCalc, priceCalc]);
 
-  async function handleTitleChange(title) {
-    console.tron.log(title);
-    await setPlan({ ...plan, title });
-    console.tron.log(plan);
+  function handleSetDuration(duration) {
+    setDurationCalc(duration);
+  }
+
+  function handleSetPrice(price) {
+    setPriceCalc(price);
   }
 
   function handleSubmit({ title, duration, price }) {
@@ -88,12 +93,7 @@ export default function Register({ history }) {
           </Header>
           <FormControl>
             <label htmlFor="title">TÍTULO DO PLANO</label>
-            <Input
-              name="title"
-              id="title"
-              type="text"
-              onChange={e => handleTitleChange(e.target.value)}
-            />
+            <Input name="title" id="title" type="text" />
             <div>
               <FormDiv>
                 <label htmlFor="duration">DURAÇÃO (em meses)</label>
@@ -101,7 +101,7 @@ export default function Register({ history }) {
                   name="duration"
                   id="duration"
                   type="text"
-                  onChange={e => setPlan({ ...plan, duration: e.target.value })}
+                  onChange={e => handleSetDuration(e.target.value)}
                 />
               </FormDiv>
               <FormDiv>
@@ -110,7 +110,7 @@ export default function Register({ history }) {
                   name="price"
                   id="price"
                   type="text"
-                  onChange={e => setPlan({ ...plan, price: e.target.value })}
+                  onChange={e => handleSetPrice(e.target.value)}
                 />
               </FormDiv>
               <FormDivWithoutPadding>
@@ -119,7 +119,7 @@ export default function Register({ history }) {
                   value={totalPrice}
                   name="totalPrice"
                   id="totalPrice"
-                  readOnly
+                  disabled
                 />
               </FormDivWithoutPadding>
             </div>

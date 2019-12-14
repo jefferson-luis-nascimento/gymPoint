@@ -16,11 +16,19 @@ import {
   EmptyList,
 } from '~/styles/stylesGlobal';
 
-import { loadAllRequest } from '~/store/modules/plan/actions';
+import {
+  loadAllRequest,
+  loadRequest,
+  deleteRequest,
+} from '~/store/modules/plan/actions';
 
 export default function Plan({ history }) {
   const dispatch = useDispatch();
   const plans = useSelector(state => state.plan.plans);
+
+  function handleEdit(id) {
+    dispatch(loadRequest(id));
+  }
 
   useEffect(() => {
     dispatch(loadAllRequest());
@@ -32,6 +40,14 @@ export default function Plan({ history }) {
 
   function handleRegister() {
     history.push('./plan-register');
+  }
+
+  async function handleDelete(id) {
+    const answer = window.confirm('Deseja realmente excluir esse plano?');
+
+    if (answer) {
+      dispatch(deleteRequest(id));
+    }
   }
 
   return (
@@ -75,10 +91,14 @@ export default function Plan({ history }) {
                   </td>
                   <td />
                   <td>
-                    <BlueButton>editar</BlueButton>
+                    <BlueButton onClick={() => handleEdit(plan.id)}>
+                      editar
+                    </BlueButton>
                   </td>
                   <td>
-                    <RedButton>apagar</RedButton>
+                    <RedButton onClick={() => handleDelete(plan.id)}>
+                      apagar
+                    </RedButton>
                   </td>
                 </tr>
               ))}

@@ -87,10 +87,10 @@ export default function Enrollment({ history }) {
                     <strong>{enrollment.plan.title}</strong>
                   </td>
                   <td>
-                    <strong>{enrollment.start_date}</strong>
+                    <strong>{enrollment.startDateFormatted}</strong>
                   </td>
                   <td>
-                    <strong>{enrollment.end_date}</strong>
+                    <strong>{enrollment.endDateFormatted}</strong>
                   </td>
                   <td>
                     <MdCheckCircle

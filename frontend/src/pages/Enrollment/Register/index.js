@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { MdCheck, MdKeyboardArrowLeft } from 'react-icons/md';
@@ -19,6 +20,10 @@ import {
   SelectUnform,
 } from '~/styles/stylesGlobal';
 
+import { loadAllRequest as loadStudents } from '~/store/modules/student/actions';
+import { loadAllRequest as loadPlans } from '~/store/modules/plan/actions';
+import { addRequest, updateRequest } from '~/store/modules/enrollment/actions';
+
 const schema = Yup.object().shape({
   student_id: Yup.number().required('Aluno é obrigatório'),
   plan_id: Yup.number().required('Plano é obrigatório'),
@@ -26,25 +31,32 @@ const schema = Yup.object().shape({
 });
 
 export default function Register({ history }) {
-  const [students, setStudents] = useState([]);
-  const [plans, setPlans] = useState([]);
+  const dispatch = useDispatch();
+  const students = useSelector(state => state.student.students);
+  const plans = useSelector(state => state.plan.plans);
+  const enrollment = useSelector(state => state.enrollment.enrollment);
+  const { id } = enrollment;
+  const loading = useSelector(state => state.enrollment.loading);
+  const newEnrollment = useSelector(state => state.enrollment.newEnrollment);
+
+  const studentList = useMemo(() => {
+    return students.map(student => ({
+      id: student.id,
+      title: student.name,
+    }));
+  }, [students]);
 
   useEffect(() => {
-    setStudents([
-      { id: 1, title: 'Jefferson Luis Nascimento' },
-      { id: 2, title: 'Lucinéia Rosa da Silva' },
-      { id: 3, title: 'Jessica Rosa da Silva' },
-    ]);
+    dispatch(loadStudents());
+    dispatch(loadPlans());
+  }, [dispatch]);
 
-    setPlans([
-      { id: 1, title: 'Silver' },
-      { id: 2, title: 'Gold' },
-      { id: 3, title: 'Diamond' },
-    ]);
-  }, []);
-
-  function handleSubmit(data) {
-    console.tron.log(data);
+  function handleSubmit({ student_id, plan_id, start_date }) {
+    if (newEnrollment) {
+      dispatch(addRequest(student_id, plan_id, start_date));
+    } else {
+      dispatch(updateRequest(id, student_id, plan_id, start_date));
+    }
   }
 
   function handleBack() {
@@ -67,7 +79,7 @@ export default function Register({ history }) {
               <ButtonRegister type="submit">
                 <div>
                   <MdCheck size={20} color="#fff" />
-                  <span>SALVAR</span>
+                  <span>{loading ? '...GRAVANDO' : 'SALVAR'}</span>
                 </div>
               </ButtonRegister>
             </HeaderOptions>
@@ -75,7 +87,7 @@ export default function Register({ history }) {
           <FormControl>
             <label htmlFor="student_id">ALUNO</label>
             <SelectUnform
-              options={students}
+              options={studentList}
               name="student_id"
               id="student_id"
               placeholder="Selecione o Aluno"

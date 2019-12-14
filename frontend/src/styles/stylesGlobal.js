@@ -207,6 +207,10 @@ export const SelectUnform = styled(Select)`
   font-size: 16px;
   color: #444;
   background: #fff;
+
+  option {
+    padding: 5px;
+  }
 `;
 
 export const FormDiv = styled.div`

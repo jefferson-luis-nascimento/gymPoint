@@ -15,6 +15,7 @@ const INITIAL_STATE = {
   student: studentDefault,
   loading: false,
   newStudent: true,
+  students: [],
 };
 
 export default function student(state = INITIAL_STATE, action) {
@@ -51,6 +52,19 @@ export default function student(state = INITIAL_STATE, action) {
       }
       case '@student/DELETE_SUCCESS': {
         draft.student = studentDefault;
+        draft.loading = false;
+        draft.newStudent = true;
+        break;
+      }
+      case '@student/LOAD_ALL_REQUEST': {
+        draft.student = studentDefault;
+        draft.loading = false;
+        draft.newStudent = true;
+        break;
+      }
+      case '@student/LOAD_ALL_SUCCESS': {
+        draft.student = studentDefault;
+        draft.students = action.payload.students;
         draft.loading = false;
         draft.newStudent = true;
         break;

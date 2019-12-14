@@ -64,6 +64,20 @@ export function deleteSuccess(students) {
   };
 }
 
+export function loadAllRequest(name, page) {
+  return {
+    type: '@student/LOAD_ALL_REQUEST',
+    payload: { name, page },
+  };
+}
+
+export function loadAllSuccess(students) {
+  return {
+    type: '@student/LOAD_ALL_SUCCESS',
+    payload: { students },
+  };
+}
+
 export function cancel() {
   return {
     type: '@student/CANCEL',

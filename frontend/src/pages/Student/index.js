@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import React, { useState, useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdAdd } from 'react-icons/md';
 import PropTypes from 'prop-types';
 
@@ -18,30 +18,26 @@ import {
 } from '~/styles/stylesGlobal';
 import { FilterInput, Search } from './styles';
 
-import api from '~/services/api';
-import { loadRequest, deleteRequest } from '~/store/modules/student/actions';
+import {
+  loadRequest,
+  deleteRequest,
+  loadAllRequest,
+} from '~/store/modules/student/actions';
 
 export default function Student({ history }) {
   const [name, setName] = useState('');
   const [page, setPage] = useState(1);
-  const [students, setStudents] = useState([]);
+  const students = useSelector(state => state.student.students);
   const dispatch = useDispatch();
 
   const studentsCount = useMemo(() => {
     return students.length;
   }, [students]);
 
-  async function loadStudents() {
-    const response = await api.get('/students', { params: { name, page } });
-
-    setStudents(response.data);
-  }
-
   useEffect(() => {
     setPage(1);
-    loadStudents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(loadAllRequest(name, page));
+  }, [dispatch, name, page]);
 
   function handleRegister() {
     history.push('/student-register');
@@ -61,8 +57,6 @@ export default function Student({ history }) {
 
     if (answer) {
       await dispatch(deleteRequest(id));
-      setPage(1);
-      loadStudents();
     }
   }
 

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { MdAdd, MdCheckCircle } from 'react-icons/md';
 
@@ -12,12 +13,43 @@ import {
   Header,
   HeaderOptions,
   ButtonRegister,
+  EmptyList,
 } from '~/styles/stylesGlobal';
 
+import {
+  loadRequest,
+  deleteRequest,
+  loadAllRequest,
+} from '~/store/modules/enrollment/actions';
+
 export default function Enrollment({ history }) {
+  const enrollments = useSelector(state => state.enrollment.enrollments);
+  const dispatch = useDispatch();
+
+  const enrollmentsCount = useMemo(() => {
+    return enrollments.length;
+  }, [enrollments]);
+
+  useEffect(() => {
+    dispatch(loadAllRequest());
+  }, [dispatch]);
+
   function handleRegister() {
-    history.push('./enrollment-register');
+    history.push('/enrollment-register');
   }
+
+  function handleEdit(id) {
+    dispatch(loadRequest(id));
+  }
+
+  async function handleDelete(id) {
+    const answer = window.confirm('Deseja realmente excluir essa matrícula?');
+
+    if (answer) {
+      dispatch(deleteRequest(id));
+    }
+  }
+
   return (
     <Container>
       <Content>
@@ -32,117 +64,58 @@ export default function Enrollment({ history }) {
             </ButtonRegister>
           </HeaderOptions>
         </Header>
-        <Table>
-          <thead>
-            <tr>
-              <th>ALUNO</th>
-              <th>PLANO</th>
-              <th>INÍCIO</th>
-              <th>TÉRMINO</th>
-              <th>ATIVA</th>
-              <th> </th>
-              <th> </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <strong>Cha Ji-Hun</strong>
-              </td>
-              <td>
-                <strong>Start</strong>
-              </td>
-              <td>
-                <strong>30 de Abril de 2019</strong>
-              </td>
-              <td>
-                <strong>30 de Maio de 2019</strong>
-              </td>
-              <td>
-                <MdCheckCircle size={20} color="#42cb59" />
-              </td>
-              <td />
-              <td>
-                <BlueButton>editar</BlueButton>
-              </td>
-              <td>
-                <RedButton>apagar</RedButton>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Cha Ji-Hun</strong>
-              </td>
-              <td>
-                <strong>Start</strong>
-              </td>
-              <td>
-                <strong>30 de Abril de 2019</strong>
-              </td>
-              <td>
-                <strong>30 de Maio de 2019</strong>
-              </td>
-              <td>
-                <MdCheckCircle size={20} color="#42cb59" />
-              </td>
-              <td />
-              <td>
-                <BlueButton>editar</BlueButton>
-              </td>
-              <td>
-                <RedButton>apagar</RedButton>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Cha Ji-Hun</strong>
-              </td>
-              <td>
-                <strong>Start</strong>
-              </td>
-              <td>
-                <strong>30 de Abril de 2019</strong>
-              </td>
-              <td>
-                <strong>30 de Maio de 2019</strong>
-              </td>
-              <td>
-                <MdCheckCircle size={20} color="#ddd" />
-              </td>
-              <td />
-              <td>
-                <BlueButton>editar</BlueButton>
-              </td>
-              <td>
-                <RedButton>apagar</RedButton>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Cha Ji-Hun</strong>
-              </td>
-              <td>
-                <strong>Start</strong>
-              </td>
-              <td>
-                <strong>30 de Abril de 2019</strong>
-              </td>
-              <td>
-                <strong>30 de Maio de 2019</strong>
-              </td>
-              <td>
-                <MdCheckCircle size={20} color="#42cb59" />
-              </td>
-              <td />
-              <td>
-                <BlueButton>editar</BlueButton>
-              </td>
-              <td>
-                <RedButton>apagar</RedButton>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
+        {enrollmentsCount > 0 ? (
+          <Table>
+            <thead>
+              <tr>
+                <th>ALUNO</th>
+                <th>PLANO</th>
+                <th>INÍCIO</th>
+                <th>TÉRMINO</th>
+                <th>ATIVA</th>
+                <th> </th>
+                <th> </th>
+              </tr>
+            </thead>
+            <tbody>
+              {enrollments.map(enrollment => (
+                <tr>
+                  <td>
+                    <strong>{enrollment.student.name}</strong>
+                  </td>
+                  <td>
+                    <strong>{enrollment.plan.title}</strong>
+                  </td>
+                  <td>
+                    <strong>{enrollment.start_date}</strong>
+                  </td>
+                  <td>
+                    <strong>{enrollment.end_date}</strong>
+                  </td>
+                  <td>
+                    <MdCheckCircle
+                      size={20}
+                      color={enrollment.active ? '#42cb59' : '#ddd'}
+                    />
+                  </td>
+                  <td />
+                  <td>
+                    <BlueButton onClick={() => handleEdit(enrollment.id)}>
+                      editar
+                    </BlueButton>
+                  </td>
+                  <td>
+                    <RedButton onClick={() => handleDelete(enrollment.id)}>
+                      apagar
+                    </RedButton>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        ) : (
+          <EmptyList>Não existem matrículas cadastradas</EmptyList>
+        )}
       </Content>
     </Container>
   );

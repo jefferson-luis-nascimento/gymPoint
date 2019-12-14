@@ -91,7 +91,7 @@ export function* loadAll() {
   try {
     const response = yield call(api.get, '/enrollments');
 
-    yield put(loadAllSuccess(response.datallments));
+    yield put(loadAllSuccess(response.data));
   } catch (error) {
     console.tron.error(error);
     toast.error('Não foi possível carregar as Matrículas');

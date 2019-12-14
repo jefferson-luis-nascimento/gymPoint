@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 
 import api from '~/services/api';
 import history from '~/services/history';
+import { formatPrice } from '~/util/format';
 
 import {
   addSuccess,
@@ -13,13 +14,27 @@ import {
   loadAllRequest,
 } from './actions';
 
+function loadFormattedPrice(plan) {
+  return {
+    ...plan,
+    priceFormatted: formatPrice(plan.price),
+    totalPriceFormatted: formatPrice(plan.totalPrice),
+  };
+}
+
+function loadFormattedPrices({ data }) {
+  return data.map(plan => loadFormattedPrice(plan));
+}
+
 export function* add({ payload }) {
   try {
     const { title, duration, price } = payload.plan;
 
     const response = yield call(api.post, 'plans', { title, duration, price });
 
-    yield put(addSuccess(response.data));
+    const plan = loadFormattedPrice(response.data);
+
+    yield put(addSuccess(plan));
 
     toast.success('Plano gravado com sucesso!');
     history.push('/plan');
@@ -41,7 +56,9 @@ export function* update({ payload }) {
       price,
     });
 
-    yield put(addSuccess(response.data));
+    const plan = loadFormattedPrice(response.data);
+
+    yield put(addSuccess(plan));
 
     toast.success('Plano atualizado com sucesso!');
     history.push('/plan');
@@ -56,7 +73,9 @@ export function* load({ payload }) {
   try {
     const response = yield call(api.get, `/plans/${payload.plan.id}`);
 
-    yield put(loadSuccess(response.data));
+    const plan = loadFormattedPrice(response.data);
+
+    yield put(loadSuccess(plan));
 
     history.push('/plan-register');
   } catch (error) {
@@ -84,7 +103,7 @@ export function* loadAll() {
   try {
     const response = yield call(api.get, '/plans');
 
-    const plans = response.data;
+    const plans = loadFormattedPrices(response);
 
     yield put(loadAllSuccess(plans));
   } catch (error) {

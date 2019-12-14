@@ -59,7 +59,6 @@ export function deleteSuccess(plans) {
 export function loadAllRequest() {
   return {
     type: '@plan/LOAD_ALL_REQUEST',
-    payload: {},
   };
 }
 

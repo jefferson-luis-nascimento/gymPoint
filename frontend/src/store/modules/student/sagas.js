@@ -5,7 +5,7 @@ import { differenceInCalendarYears } from 'date-fns';
 import api from '~/services/api';
 import history from '~/services/history';
 
-import { addSuccess, failure, loadSuccess } from './actions';
+import { addSuccess, failure, loadSuccess, deleteSuccess } from './actions';
 
 export function* add({ payload }) {
   try {
@@ -80,8 +80,6 @@ export function* update({ payload }) {
 
 export function* load({ payload }) {
   try {
-    console.tron.log(payload);
-    console.tron.log(`/students/${payload.student.id}`);
     const response = yield call(api.get, `/students/${payload.student.id}`);
 
     const student = response.data;
@@ -101,8 +99,30 @@ export function* load({ payload }) {
   }
 }
 
+export function* deleteOne({ payload }) {
+  try {
+    yield call(api.delete, `/students/${payload.student.id}`);
+
+    /* const response = yield call(api.get, '/students');
+
+    const students = response.data.map(student => ({
+      ...student,
+      age: differenceInCalendarYears(new Date(), student.birthday),
+    }));
+
+    yield put(deleteSuccess(students)); */
+    yield put(deleteSuccess());
+    toast.success('Aluno excluído com sucesso!');
+  } catch (error) {
+    console.tron.error(error);
+    toast.error('Não foi possível carregar o aluno');
+    yield put(failure());
+  }
+}
+
 export default all([
   takeLatest('@student/ADD_REQUEST', add),
   takeLatest('@student/UPDATE_REQUEST', update),
   takeLatest('@student/LOAD_REQUEST', load),
+  takeLatest('@student/DELETE_REQUEST', deleteOne),
 ]);

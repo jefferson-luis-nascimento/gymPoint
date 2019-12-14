@@ -50,7 +50,7 @@ export default function Register() {
   const user_id = useSelector(state => state.user.profile.user_id);
   const student = useSelector(state => state.student.student);
   const loading = useSelector(state => state.student.loading);
-  const newStudent = useSelector(state => state.student.new);
+  const newStudent = useSelector(state => state.student.newStudent);
   const { id } = student;
   const dispatch = useDispatch();
 

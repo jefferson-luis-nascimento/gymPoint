@@ -13,7 +13,6 @@ export function addSuccess(student) {
 }
 
 export function loadRequest(id) {
-  console.tron.log({ student: { id } });
   return {
     type: '@student/LOAD_REQUEST',
     payload: { student: { id } },
@@ -48,6 +47,20 @@ export function updateSuccess(student) {
   return {
     type: '@student/UPDATE_SUCCESS',
     payload: { student },
+  };
+}
+
+export function deleteRequest(id) {
+  return {
+    type: '@student/DELETE_REQUEST',
+    payload: { student: { id } },
+  };
+}
+
+export function deleteSuccess(students) {
+  return {
+    type: '@student/DELETE_SUCCESS',
+    payload: { students },
   };
 }
 

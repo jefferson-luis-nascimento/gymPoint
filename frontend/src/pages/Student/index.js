@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { MdAdd } from 'react-icons/md';
@@ -18,29 +19,29 @@ import {
 import { FilterInput, Search } from './styles';
 
 import api from '~/services/api';
-import { loadRequest } from '~/store/modules/student/actions';
+import { loadRequest, deleteRequest } from '~/store/modules/student/actions';
 
 export default function Student({ history }) {
   const [name, setName] = useState('');
   const [page, setPage] = useState(1);
   const [students, setStudents] = useState([]);
-
   const dispatch = useDispatch();
 
   const studentsCount = useMemo(() => {
     return students.length;
   }, [students]);
 
-  useEffect(() => {
-    async function loadStudents() {
-      const response = await api.get('/students', { params: { name, page } });
+  async function loadStudents() {
+    const response = await api.get('/students', { params: { name, page } });
 
-      console.tron.log(response, name, page);
-      setStudents(response.data);
-    }
+    setStudents(response.data);
+  }
+
+  useEffect(() => {
     setPage(1);
     loadStudents();
-  }, [name, page]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleRegister() {
     history.push('/student-register');
@@ -53,6 +54,16 @@ export default function Student({ history }) {
   function handleEdit(id) {
     console.tron.log(id);
     dispatch(loadRequest(id));
+  }
+
+  async function handleDelete(id) {
+    const answer = window.confirm('Deseja realmente excluir esse aluno?');
+
+    if (answer) {
+      await dispatch(deleteRequest(id));
+      setPage(1);
+      loadStudents();
+    }
   }
 
   return (
@@ -108,7 +119,9 @@ export default function Student({ history }) {
                     </BlueButton>
                   </td>
                   <td>
-                    <RedButton>apagar</RedButton>
+                    <RedButton onClick={() => handleDelete(student.id)}>
+                      apagar
+                    </RedButton>
                   </td>
                 </tr>
               ))}

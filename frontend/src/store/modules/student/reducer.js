@@ -1,16 +1,18 @@
 import produce from 'immer';
 import history from '~/services/history';
 
+const studentDefault = {
+  id: 0,
+  name: '',
+  email: '',
+  birthday: new Date(),
+  weight: 0,
+  height: 0,
+  age: 0,
+};
+
 const INITIAL_STATE = {
-  student: {
-    id: 0,
-    name: '',
-    email: '',
-    birthday: new Date(),
-    weight: 0,
-    height: 0,
-    age: 0,
-  },
+  student: studentDefault,
   loading: false,
   newStudent: true,
 };
@@ -24,11 +26,15 @@ export default function student(state = INITIAL_STATE, action) {
         break;
       }
       case '@student/ADD_SUCCESS': {
-        draft = INITIAL_STATE;
+        draft.student = studentDefault;
+        draft.loading = false;
+        draft.newStudent = true;
         break;
       }
       case '@student/LOAD_REQUEST': {
-        draft = INITIAL_STATE;
+        draft.student = studentDefault;
+        draft.loading = true;
+        draft.newStudent = false;
         break;
       }
       case '@student/LOAD_SUCCESS': {
@@ -37,20 +43,23 @@ export default function student(state = INITIAL_STATE, action) {
         draft.newStudent = false;
         break;
       }
+      case '@student/DELETE_REQUEST': {
+        draft.student = studentDefault;
+        draft.loading = true;
+        draft.newStudent = false;
+        break;
+      }
+      case '@student/DELETE_SUCCESS': {
+        draft.student = studentDefault;
+        draft.loading = false;
+        draft.newStudent = true;
+        break;
+      }
       case '@student/CANCEL': {
-        draft.student = {
-          id: 0,
-          name: '',
-          email: '',
-          birthday: new Date(),
-          weight: 0,
-          height: 0,
-          age: 0,
-        };
+        draft.student = studentDefault;
         draft.loading = false;
         draft.newStudent = true;
         history.push('/student');
-        console.tron.log('entron no cancel', state, action, draft);
         break;
       }
       case '@student/FAILURE': {

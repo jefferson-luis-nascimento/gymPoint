@@ -16,12 +16,25 @@ const helpOrderDefault = {
 const INITIAL_STATE = {
   helpOrder: helpOrderDefault,
   loading: false,
+  closeModal: false,
   helpOrders: [],
 };
 
 export default function helpOrder(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
+      case '@helpOrder/ANSWER_REQUEST': {
+        draft.helpOrder = helpOrderDefault;
+        draft.loading = true;
+        draft.closeModal = false;
+        break;
+      }
+      case '@helpOrder/ANSWER_SUCCESS': {
+        draft.helpOrder = action.payload.helpOrder;
+        draft.loading = false;
+        draft.closeModal = true;
+        break;
+      }
       case '@helpOrder/LOAD_REQUEST': {
         draft.helpOrder = helpOrderDefault;
         draft.loading = true;

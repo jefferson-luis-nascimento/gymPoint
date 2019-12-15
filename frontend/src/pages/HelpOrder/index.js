@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import { MdClose } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 import {
   ContainerModal,
@@ -17,7 +19,13 @@ import {
   Table,
   BlueButton,
   RedButton,
+  EmptyList,
 } from '~/styles/stylesGlobal';
+
+import {
+  loadAllRequest,
+  answerRequest,
+} from '~/store/modules/helpOrder/actions';
 
 const customStyles = {
   content: {
@@ -28,6 +36,7 @@ const customStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     maxWidth: 400,
+    minWidth: 400,
     height: 470,
     border: 0,
   },
@@ -44,14 +53,45 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export default function HelpOrder() {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const helpOrders = useSelector(state => state.helpOrder.helpOrders);
+  const closeModalValue = useSelector(state => state.helpOrder.closeModal);
+  const [helpOrder, setHelpOrder] = useState({});
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [answer, setAnswer] = useState('');
+
+  useEffect(() => {
+    dispatch(loadAllRequest());
+  }, [dispatch]);
 
   function closeModal() {
     setIsOpen(false);
+  }
+
+  useEffect(() => {
+    if (closeModalValue) {
+      closeModal();
+      dispatch(loadAllRequest());
+    }
+  }, [closeModalValue, dispatch]);
+
+  const helpOrdersCount = useMemo(() => {
+    return helpOrders.length;
+  }, [helpOrders.length]);
+
+  function openModal(ho) {
+    setHelpOrder(ho);
+    setIsOpen(true);
+  }
+
+  function handleAnswer(id) {
+    if (answer.length === 0) {
+      console.tron.log(answer);
+      toast.error('Resposta entá vazia');
+    } else {
+      dispatch(answerRequest(id, answer));
+    }
   }
 
   return (
@@ -59,40 +99,32 @@ export default function HelpOrder() {
       <Container>
         <Content>
           <HeaderLabel>Pedidos de Auxílio</HeaderLabel>
-          <Table>
-            <thead>
-              <tr>
-                <th>ALUNO</th>
-                <th> </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Lennert Sebastian</strong>
-                </td>
-                <td>
-                  <BlueButton onClick={openModal}>responder</BlueButton>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Lennert Sebastian</strong>
-                </td>
-                <td>
-                  <BlueButton onClick={openModal}>responder</BlueButton>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Lennert Sebastian</strong>
-                </td>
-                <td>
-                  <BlueButton onClick={openModal}>responder</BlueButton>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
+          {helpOrdersCount > 0 ? (
+            <Table>
+              <thead>
+                <tr>
+                  <th>ALUNO</th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                {helpOrders.map(ho => (
+                  <tr>
+                    <td>
+                      <strong>{ho.student.name}</strong>
+                    </td>
+                    <td>
+                      <BlueButton onClick={() => openModal(ho)}>
+                        responder
+                      </BlueButton>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <EmptyList>Não existem Pedios de Auxílio pendentes</EmptyList>
+          )}
         </Content>
       </Container>
       {modalIsOpen && (
@@ -110,20 +142,20 @@ export default function HelpOrder() {
               </RedButton>
             </ModalTitle>
 
-            <ModalAnswer>
-              Olá pessoal da academia, gostaria de saber se quando acordar devo
-              ingerir batata doce e frango logo de primeira, preparar as
-              marmitas e lotar a geladeira? Dou um pico de insulina e jogo o
-              hipercalórico?
-            </ModalAnswer>
+            <ModalAnswer>{helpOrder.question}</ModalAnswer>
 
             <ModalTitle>
               <strong>SUA RESPOSTA</strong>
             </ModalTitle>
 
-            <ModalInput placeholder="Sua resposta" />
+            <ModalInput
+              onChange={e => setAnswer(e.target.value)}
+              placeholder="Sua resposta"
+            />
 
-            <ModalButton>Responder Aluno</ModalButton>
+            <ModalButton onClick={() => handleAnswer(helpOrder.id)}>
+              Responder Aluno
+            </ModalButton>
           </Modal>
         </ContainerModal>
       )}

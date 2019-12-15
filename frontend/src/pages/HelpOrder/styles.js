@@ -29,6 +29,9 @@ export const ModalInput = styled.textarea.attrs({
   cols: 30,
   rows: 8,
 })`
+  border: 1px solid #999;
+  border-radius: 4px;
+  padding: 4px;
   display: block;
   width: 100%;
   height: 150px;
@@ -37,6 +40,7 @@ export const ModalInput = styled.textarea.attrs({
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   margin-bottom: 15px;
+  resize: none;
 `;
 
 export const ModalButton = styled.button`

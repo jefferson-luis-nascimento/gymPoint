@@ -12,10 +12,10 @@ export function addSuccess(plan) {
   };
 }
 
-export function loadRequest(id) {
+export function loadRequest(id, open) {
   return {
     type: '@plan/LOAD_REQUEST',
-    payload: { plan: { id } },
+    payload: { plan: { id, open } },
   };
 }
 

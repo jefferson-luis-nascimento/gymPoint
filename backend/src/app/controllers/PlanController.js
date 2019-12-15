@@ -11,9 +11,9 @@ class PlanController {
       return res.status(404).json({ error: 'Plan not found' });
     }
 
-    const { title, duration, price } = plan;
+    const { title, duration, price, totalPrice } = plan;
 
-    return res.json({ id, title, duration, price });
+    return res.json({ id, title, duration, price, totalPrice });
   }
 
   async show(req, res) {

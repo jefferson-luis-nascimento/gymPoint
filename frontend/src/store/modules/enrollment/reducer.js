@@ -18,6 +18,7 @@ const enrollmentDefault = {
     title: '',
     duration: 0,
     price: 0,
+    totalPrice: 0,
   },
 };
 

@@ -108,7 +108,7 @@ class EnrollmentController {
         {
           model: Plan,
           as: 'plan',
-          attributes: ['title', 'duration', 'price'],
+          attributes: ['title', 'duration', 'price', 'totalPrice'],
         },
       ],
     });
@@ -124,6 +124,7 @@ class EnrollmentController {
     const { page = 1 } = req.query;
 
     const enrollments = await Enrollment.findAll({
+      order: [['id', 'ASC']],
       offset: (page - 1) * 20,
       limit: 20,
       attributes: [
@@ -144,7 +145,7 @@ class EnrollmentController {
         {
           model: Plan,
           as: 'plan',
-          attributes: ['title', 'duration', 'price'],
+          attributes: ['title', 'duration', 'price', 'totalPrice'],
         },
       ],
     });

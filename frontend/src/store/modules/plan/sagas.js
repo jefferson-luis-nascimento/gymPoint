@@ -77,7 +77,9 @@ export function* load({ payload }) {
 
     yield put(loadSuccess(plan));
 
-    history.push('/plan-register');
+    if (payload.plan.open) {
+      history.push('/plan-register');
+    }
   } catch (error) {
     console.tron.error(error);
     toast.error('Não foi possível carregar o Plano');

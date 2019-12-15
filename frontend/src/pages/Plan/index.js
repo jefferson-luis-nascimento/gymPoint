@@ -27,7 +27,7 @@ export default function Plan({ history }) {
   const plans = useSelector(state => state.plan.plans);
 
   function handleEdit(id) {
-    dispatch(loadRequest(id));
+    dispatch(loadRequest(id, true));
   }
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import history from '~/services/history';
 
 import {
   addSuccess,
+  updateSuccess,
   failure,
   loadSuccess,
   deleteSuccess,
@@ -69,7 +70,7 @@ export function* update({ payload }) {
     yield call(api.put, `/students/${id}`, student);
 
     yield put(
-      addSuccess({
+      updateSuccess({
         id,
         ...student,
         age: differenceInCalendarYears(new Date(), birthday),

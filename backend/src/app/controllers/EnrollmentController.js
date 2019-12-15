@@ -67,6 +67,7 @@ class EnrollmentController {
         title: plan.title,
         duration: plan.duration,
         price: plan.price,
+        totalPrice: plan.totalPrice,
       },
       student: {
         student_id,

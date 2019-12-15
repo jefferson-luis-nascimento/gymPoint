@@ -7,6 +7,7 @@ import { formatPrice } from '~/util/format';
 
 import {
   addSuccess,
+  updateSuccess,
   failure,
   loadSuccess,
   deleteSuccess,
@@ -58,7 +59,7 @@ export function* update({ payload }) {
 
     const plan = loadFormattedPrice(response.data);
 
-    yield put(addSuccess(plan));
+    yield put(updateSuccess(plan));
 
     toast.success('Plano atualizado com sucesso!');
     history.push('/plan');

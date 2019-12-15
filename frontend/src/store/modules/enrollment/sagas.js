@@ -8,6 +8,7 @@ import history from '~/services/history';
 
 import {
   addSuccess,
+  updateSuccess,
   failure,
   loadSuccess,
   deleteSuccess,
@@ -64,7 +65,7 @@ export function* update({ payload }) {
 
     const enrollment = loadFormattedDate(response.data);
 
-    yield put(addSuccess(enrollment));
+    yield put(updateSuccess(enrollment));
 
     toast.success('Matrícula atualizado com sucesso!');
     history.push('/enrollment');

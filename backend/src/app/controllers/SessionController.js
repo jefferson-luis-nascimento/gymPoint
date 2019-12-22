@@ -21,6 +21,8 @@ class SessionController {
 
     const { email, password } = req.body;
 
+    console.log(email);
+
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
@@ -48,24 +50,23 @@ class SessionController {
   }
 
   async index(req, res) {
-    const { id } = req.params;
+    const { student_id } = req.params;
 
-    const student = await Student.findByPk(id);
+    const student = await Student.findByPk(student_id);
 
     if (!student) {
       return res.status(404).json({ error: 'Student not found' });
     }
 
-    const { name, email, birthday, age, weight, height } = student;
+    const { id, name, email, birthday, age, weight, height } = student;
 
-    const enrollment = Enrollment.findOne({
+    const enrollment = await Enrollment.findOne({
       where: {
-        student_id: id,
-        active: true,
+        student_id,
       },
     });
 
-    if (!enrollment) {
+    if (!enrollment || !enrollment.active) {
       return res
         .status(400)
         .json({ error: 'Student do not have a active enrollment' });

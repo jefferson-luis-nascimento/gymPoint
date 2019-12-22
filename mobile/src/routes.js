@@ -31,7 +31,7 @@ export default (isSignedIn = false) =>
                 {
                   defaultNavigationOptions: {
                     headerTransparent: true,
-                    headerTintColor: '#fff',
+                    headerTintColor: '#999',
                     headerLeftContainerStyle: {
                       marginLeft: 20,
                     },
@@ -39,10 +39,10 @@ export default (isSignedIn = false) =>
                 }
               ),
               navigationOptions: {
-                tabBarVisible: false,
+                tabBarVisible: true,
                 tabBarLabel: 'Pedir ajuda',
-                tabBarIcon: (
-                  <Icon name="comment-question" size={20} color="#999" />
+                tabBarIcon: ({ tintColor }) => (
+                  <Icon name="comment-question" size={20} color={tintColor} />
                 ),
               },
             },
@@ -52,7 +52,7 @@ export default (isSignedIn = false) =>
             tabBarOptions: {
               keyboardHidesTabBar: true,
               activeTintColor: '#ee4e62',
-              inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
+              inactiveTintColor: '#999',
               style: {
                 backgroundColor: '#fff',
               },

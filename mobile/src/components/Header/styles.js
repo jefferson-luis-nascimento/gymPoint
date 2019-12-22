@@ -7,6 +7,7 @@ export const Container = styled.View`
   align-items: center;
   padding: 10px;
   background: #fff;
+  width: 100%;
 `;
 
 export const Logo = styled.Image`

@@ -67,7 +67,7 @@ class CheckinController {
       where: {
         student_id,
       },
-      attributes: ['student_id', 'created_at'],
+      attributes: ['id', 'student_id', 'created_at'],
       include: {
         model: Student,
         as: 'student',

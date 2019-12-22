@@ -7,9 +7,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SignIn from '~/pages/SignIn';
 
 import Checkins from '~/pages/Checkins';
-import HelpOrder from '~/pages/HelpOrder';
-import NewHelpOrder from '~/pages/HelpOrder/NewHelpOrder';
-import Answer from '~/pages/HelpOrder/Answer';
+import HelpOrder from '~/pages/HelpOrders/HelpOrder';
+import NewHelpOrder from '~/pages/HelpOrders/NewHelpOrder';
+import Answer from '~/pages/HelpOrders/Answer';
 
 export default (isSignedIn = false) =>
   createAppContainer(

@@ -9,21 +9,20 @@ export function* signIn({ payload }) {
   try {
     const { id } = payload;
 
-    const response = yield call(api.get, `students/${id}`);
+    console.tron.log('Saga', id);
 
-    const { student } = response.data;
+    const response = yield call(api.get, `sessions/${id}/students`);
+
+    const student = response.data;
+
+    console.tron.log('Saga', student);
 
     if (!student) {
-      Alert.alert(
-        'Erro no login',
-        'Usuário não pode ser prestador de serviço.'
-      );
+      Alert.alert('Erro no login', 'Aluno não encontrado.');
       return;
     }
 
-    yield put(signInSuccess(token, user));
-
-    // history.push('/dashboard');
+    yield put(signInSuccess(student));
   } catch (error) {
     Alert.alert(
       'Falha na autenticação',
@@ -33,19 +32,4 @@ export function* signIn({ payload }) {
   }
 }
 
-export function setToken({ payload }) {
-  if (!payload) {
-    return;
-  }
-
-  const { token } = payload.auth;
-
-  if (token) {
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-  }
-}
-
-export default all([
-  takeLatest('persist/REHYDRATE', setToken),
-  takeLatest('@auth/SIGN_IN_REQUEST', signIn),
-]);
+export default all([takeLatest('@auth/SIGN_IN_REQUEST', signIn)]);

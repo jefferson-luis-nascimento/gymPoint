@@ -14,6 +14,7 @@ export default function SignIn() {
   const [id, setId] = useState('');
 
   function handleSubmit() {
+    console.tron.log(loading, id);
     dispatch(signInRequest(id));
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Alert } from 'react-native';
 import { useSelector } from 'react-redux';
 import { parseISO } from 'date-fns';
@@ -16,15 +16,19 @@ import {
   Checkin,
   Left,
   Right,
+  EmptyList,
 } from './styles';
 
 import api from '~/services/api';
 
-export default function Checkins({ navigation }) {
+export default function Checkins() {
   const student = useSelector(state => state.student.student);
 
   const [checkins, setChekins] = useState([]);
 
+  const countCheckin = useMemo(() => (!checkins ? 0 : checkins.length), [
+    checkins,
+  ]);
   useEffect(() => {
     loadCheckins();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,16 +69,22 @@ export default function Checkins({ navigation }) {
         <NewCheckinButton onPress={handleSubmit}>
           Novo check-in
         </NewCheckinButton>
-        <CheckinsList
-          data={checkins}
-          keyExtractor={item => String(item.id)}
-          renderItem={({ item: checkin }) => (
-            <Checkin>
-              <Left>Check-in #{checkin.id}</Left>
-              <Right>{checkin.dateFormatted}</Right>
-            </Checkin>
-          )}
-        />
+        {countCheckin > 0 ? (
+          <CheckinsList
+            data={checkins}
+            keyExtractor={item => String(item.id)}
+            renderItem={({ item: checkin }) => (
+              <Checkin>
+                <Left>Check-in #{checkin.id}</Left>
+                <Right>{checkin.dateFormatted}</Right>
+              </Checkin>
+            )}
+          />
+        ) : (
+          <EmptyList>
+            {student.name}, você ainda não fez nenhum check-in!
+          </EmptyList>
+        )}
       </Content>
     </Container>
   );

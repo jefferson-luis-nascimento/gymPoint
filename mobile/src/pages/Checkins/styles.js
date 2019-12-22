@@ -47,3 +47,12 @@ export const Right = styled.Text`
   font-size: 14px;
   color: #666;
 `;
+
+export const EmptyList = styled.Text`
+  font-size: 18px;
+  color: #333;
+  border: 1px solid #999;
+  border-radius: 4px;
+  background: #fff;
+  padding: 20px;
+`;

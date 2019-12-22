@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 import * as Yup from 'yup';
 
 import User from '../models/User';
+import Student from '../models/Student';
+import Enrollment from '../models/Enrollment';
 import authConfig from '../../config/authConfig';
 
 class SessionController {
@@ -43,6 +45,33 @@ class SessionController {
     };
 
     return res.json(userReturn);
+  }
+
+  async index(req, res) {
+    const { id } = req.params;
+
+    const student = await Student.findByPk(id);
+
+    if (!student) {
+      return res.status(404).json({ error: 'Student not found' });
+    }
+
+    const { name, email, birthday, age, weight, height } = student;
+
+    const enrollment = Enrollment.findOne({
+      where: {
+        student_id: id,
+        active: true,
+      },
+    });
+
+    if (!enrollment) {
+      return res
+        .status(400)
+        .json({ error: 'Student do not have a active enrollment' });
+    }
+
+    return res.json({ id, name, email, birthday, age, weight, height });
   }
 }
 

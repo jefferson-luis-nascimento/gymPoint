@@ -13,6 +13,7 @@ import HelpOrderController from './app/controllers/HelpOrderController';
 const routes = new Router();
 
 routes.post('/sessions', SessionController.store);
+routes.get('/sessions/:student_id/students', SessionController.index);
 
 routes.post('/students/:student_id/checkins', CheckinController.store);
 routes.get('/students/:student_id/checkins', CheckinController.index);

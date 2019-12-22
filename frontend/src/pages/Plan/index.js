@@ -77,7 +77,7 @@ export default function Plan({ history }) {
             </thead>
             <tbody>
               {plans.map(plan => (
-                <tr>
+                <tr key={plan.id}>
                   <td>
                     <strong>{plan.title}</strong>
                   </td>

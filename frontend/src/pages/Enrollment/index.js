@@ -79,7 +79,7 @@ export default function Enrollment({ history }) {
             </thead>
             <tbody>
               {enrollments.map(enrollment => (
-                <tr>
+                <tr key={enrollment.id}>
                   <td>
                     <strong>{enrollment.student.name}</strong>
                   </td>

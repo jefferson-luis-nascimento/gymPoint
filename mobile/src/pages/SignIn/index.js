@@ -1,8 +1,36 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-// import { Container } from './styles';
+import logo from '~/assets/images/logo.png';
+
+import { Container, Logo, Form, FormInput, SubmitButton } from './styles';
+
+import { signInRequest } from '~/store/modules/auth/actions';
 
 export default function SignIn() {
-  return <View />;
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
+
+  const [id, setId] = useState('');
+
+  function handleSubmit() {
+    dispatch(signInRequest(id));
+  }
+
+  return (
+    <Container>
+      <Logo source={logo} />
+      <Form>
+        <FormInput
+          keyboardType="number-pad"
+          placeholder="Informe seu ID de cadastro"
+          value={id}
+          onChangeText={setId}
+        />
+        <SubmitButton loading={loading} onPress={handleSubmit}>
+          Entrar no sistema
+        </SubmitButton>
+      </Form>
+    </Container>
+  );
 }

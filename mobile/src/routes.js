@@ -1,7 +1,7 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigation } from 'react-native-tabs';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import SignIn from '~/pages/SignIn';
@@ -11,31 +11,31 @@ import HelpOrder from '~/pages/HelpOrder';
 import NewHelpOrder from '~/pages/HelpOrder/NewHelpOrder';
 import Answer from '~/pages/HelpOrder/Answer';
 
-export default (isSignedIn = false) => {
+export default (isSignedIn = false) =>
   createAppContainer(
     createSwitchNavigator(
       {
         Sign: createSwitchNavigator({
-          SignIn
+          SignIn,
         }),
-        App: createBottomTabNavigation(
+        App: createBottomTabNavigator(
           {
             Checkins,
-            HelpOrder: {
+            New: {
               screen: createStackNavigator(
                 {
                   HelpOrder,
                   NewHelpOrder,
-                  Answer
+                  Answer,
                 },
                 {
                   defaultNavigationOptions: {
                     headerTransparent: true,
                     headerTintColor: '#fff',
                     headerLeftContainerStyle: {
-                      marginLeft: 20
-                    }
-                  }
+                      marginLeft: 20,
+                    },
+                  },
                 }
               ),
               navigationOptions: {
@@ -43,26 +43,25 @@ export default (isSignedIn = false) => {
                 tabBarLabel: 'Pedir ajuda',
                 tabBarIcon: (
                   <Icon name="comment-question" size={20} color="#999" />
-                )
-              }
-            }
+                ),
+              },
+            },
           },
           {
             resetOnBlur: true,
             tabBarOptions: {
               keyboardHidesTabBar: true,
               activeTintColor: '#ee4e62',
-              inactiveTintColor: '#999',
+              inactiveTintColor: 'rgba(255, 255, 255, 0.6)',
               style: {
-                backgroundColor: '#fff'
-              }
-            }
+                backgroundColor: '#fff',
+              },
+            },
           }
-        )
+        ),
       },
       {
-        initialRouteName: isSignedIn ? 'App' : 'Sign'
+        initialRouteName: isSignedIn ? 'App' : 'Sign',
       }
     )
   );
-};

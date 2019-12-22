@@ -85,6 +85,7 @@ export default function Student({ history }) {
           <Table>
             <thead>
               <tr>
+                <th>ID</th>
                 <th>NOME</th>
                 <th>E-MAIL</th>
                 <th>IDADE</th>
@@ -96,6 +97,9 @@ export default function Student({ history }) {
             <tbody>
               {students.map(student => (
                 <tr key={student.id}>
+                  <td>
+                    <strong>{student.id}</strong>
+                  </td>
                   <td>
                     <strong>{student.name}</strong>
                   </td>

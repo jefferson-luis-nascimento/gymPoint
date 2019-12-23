@@ -25,7 +25,7 @@
 
 ## Getting Started
 
-Abaixo seguem as intruçõs para baixar e executar o projeto em ambiente de desenvolvimento.
+Abaixo seguem as intruções para baixar e executar o projeto em ambiente de desenvolvimento.
 
 ## Pre-requisitos
 - [Linux Mint 19.02](https://linuxmint.com/release.php?id=35) - Sistema operacional usado para desenvolvimento.

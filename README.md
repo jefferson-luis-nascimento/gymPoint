@@ -8,7 +8,7 @@
   Projeto final do bootcamp da Rocketseat. No projeto foi feito o backend, o frontend-web e o mobile.
 </h3>
 
-<h2>Funcionalidades:<h2>
+<h2>Funcionalidades:</h2>
 <p>Backend: Todas as regras de negócio e persitência;</p>
 <p>Frontend-web: Aplicativo da academia, realiza a gestão dos alunos, palnos, matriculas e pedidos de auxílio;</p>
 <p>Mobile: Aplicativo do aluno, o aluno pode fazer checkins, pedidos de auxílio e consultar a resposta da academia </p>

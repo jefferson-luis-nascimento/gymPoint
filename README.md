@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Gympoint" title="Gympoint" src=".github/gympoint-logo.png" width="200px" />
+  <img alt="Gympoint" title="Gympoint" src="gympoint.png" width="200px" />
 </h1>
 
 <h3 align="center">
@@ -53,6 +53,9 @@ Start back-end service
 ```
 $> yarn dev 
 ```
+
+After all dependencies is installed, follow the next steps:
+  -Create a file .env e include values using .envexample reference
 
 #### Front-end
 First install front-end dependencies

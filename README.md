@@ -89,6 +89,8 @@ $> yarn start
 #### Ambiente Android
 Configurar o ambiente de acordo com a documentaço da [Rocketseat](https://docs.rocketseat.dev/ambiente-react-native/introducao)
 
+### Trocar o baseUrl do arquivo ~/src/services/api.js
+### Trocar o host do arquivo ~/src/config/ReactotronConfig.js
 ### Instalar as dependências do mobile
 ```
 $> cd ./mobile/ && yarn

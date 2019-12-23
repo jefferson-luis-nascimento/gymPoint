@@ -1,8 +1,8 @@
-import React from 'react';
+// import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import SignIn from '~/pages/SignIn';
 
@@ -21,31 +21,7 @@ export default (isSignedIn = false) =>
         App: createBottomTabNavigator(
           {
             Checkins,
-            New: {
-              screen: createStackNavigator(
-                {
-                  HelpOrder,
-                  NewHelpOrder,
-                  Answer,
-                },
-                {
-                  defaultNavigationOptions: {
-                    headerTransparent: true,
-                    headerTintColor: '#999',
-                    headerLeftContainerStyle: {
-                      marginLeft: 20,
-                    },
-                  },
-                }
-              ),
-              navigationOptions: {
-                tabBarVisible: true,
-                tabBarLabel: 'Pedir ajuda',
-                tabBarIcon: ({ tintColor }) => (
-                  <Icon name="comment-question" size={20} color={tintColor} />
-                ),
-              },
-            },
+            HelpOrder,
           },
           {
             resetOnBlur: true,
@@ -59,6 +35,23 @@ export default (isSignedIn = false) =>
             },
           }
         ),
+        New: {
+          screen: createStackNavigator(
+            {
+              NewHelpOrder,
+              Answer,
+            },
+            {
+              defaultNavigationOptions: {
+                headerTransparent: true,
+                headerTintColor: '#999',
+                headerLeftContainerStyle: {
+                  marginLeft: 20,
+                },
+              },
+            }
+          ),
+        },
       },
       {
         initialRouteName: isSignedIn ? 'App' : 'Sign',

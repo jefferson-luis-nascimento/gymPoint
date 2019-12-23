@@ -29,10 +29,6 @@ export default function Checkins() {
   const countCheckin = useMemo(() => (!checkins ? 0 : checkins.length), [
     checkins,
   ]);
-  useEffect(() => {
-    loadCheckins();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [student.id]);
 
   async function loadCheckins() {
     const response = await api.get(`students/${student.id}/checkins`);
@@ -50,6 +46,11 @@ export default function Checkins() {
       }))
     );
   }
+
+  useEffect(() => {
+    loadCheckins();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [student.id]);
 
   async function handleSubmit() {
     try {

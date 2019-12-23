@@ -2,17 +2,23 @@
   <img alt="Gympoint" title="Gympoint" src="gympoint.png" width="200px" />
 </h1>
 
+<h2>Works only in Android OS<h2>
+
 <h3 align="center">
-  Rocketseat bootcamp project. The project is a back-end, web and mobile system for control and interaction between gyms and their students. It has features like login, enrollment, training, plans, payments, aid applications, etc.
+  Rocketseat bootcamp final project. The project is a backend, frontend-web and mobile system.
 </h3>
 
+<p>Backend: All bussiness logic and persitence;</p>
+<p>Frontend-web: Gym app, managment plans, students, enrollments and help orders;</p>
+<p>Mobile: Student app, the student can do checkins and help orders </p>
+
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/jopcmelo/gostack-gympoint?color=%2304D361">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/jefferson-luis-nascimento/gymPoint?color=%2304D361">
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
 
-  <a href="https://github.com/jopcmelo/gostack-gympoint/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/jopcmelo/gostack-gympoint?style=social">
+  <a href="https://github.com/jefferson-luis-nascimento/gymPoint/stargazers">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/jefferson-luis-nascimento/gymPoint?style=social">
   </a>
 </p>
 

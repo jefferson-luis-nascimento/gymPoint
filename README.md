@@ -4,7 +4,7 @@
 
 <h2>Works only in Android OS<h2>
 
-<h3 align="center">
+<h3 align="left">
   Rocketseat bootcamp final project. The project is a backend, frontend-web and mobile system.
 </h3>
 

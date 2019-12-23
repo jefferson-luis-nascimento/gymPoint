@@ -11,7 +11,14 @@ class HelpOrderController {
   async show(req, res) {
     const helpOrders = await HelpOrder.findAll({
       where: { answer: null },
-      attributes: ['id', 'student_id', 'question', 'answer'],
+      attributes: [
+        'id',
+        'student_id',
+        'question',
+        'answer',
+        'answer_at',
+        'created_at',
+      ],
       include: [
         {
           model: Student,
@@ -75,7 +82,15 @@ class HelpOrderController {
       where: {
         student_id,
       },
-      attributes: ['id', 'student_id', 'question', 'answer', 'answer_at'],
+      order: ['id'],
+      attributes: [
+        'id',
+        'student_id',
+        'question',
+        'answer',
+        'answer_at',
+        'created_at',
+      ],
       include: {
         model: Student,
         as: 'student',

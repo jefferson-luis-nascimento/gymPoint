@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { parseISO } from 'date-fns';
 import formatRelative from 'date-fns/formatDistance';
 import pt from 'date-fns/locale/pt';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Header from '~/components/Header';
-
 import {
   Container,
   Content,
+  HelpOrderButton,
   NewHelpOrderButton,
   HelpOrderHeader,
   HelpOrdersList,
@@ -22,56 +22,53 @@ import {
 
 import api from '~/services/api';
 
-const data = [
-  {
-    id: 1,
-    student_id: 12,
-    question:
-      'Olá pessoal da academia, gostaria de saber se quando acordar devo ingerir batata doce e frango logo de primeira, preparar as marmitas e lotar a geladeira? Dou um pico de insulina e jogo o hipercalórico?',
-    answer: null,
-    answer_at: new Date(),
-    withoutAnswer: true,
-    dateFormatted: 'há 3 horas',
-  },
-  {
-    id: 2,
-    student_id: 12,
-    question:
-      'Olá pessoal da academia, gostaria de saber se quando acordar devo ingerir batata doce e frango logo de primeira, preparar as marmitas e lotar a geladeira? Dou um pico de insulina e jogo o hipercalórico?',
-    answer: null,
-    answer_at: new Date(),
-    withoutAnswer: false,
-    dateFormatted: 'há 2 dias',
-  },
-];
-
 export default function HelpOrder({ navigation }) {
   const student = useSelector(state => state.student.student);
 
   const [helpOrders, setHelpOrders] = useState([]);
 
-  const countHelpOrders = 0;
+  const countHelpOrders = useMemo(() => helpOrders.length, [helpOrders]);
 
-  /*
-  const countHelpOrders = useMemo(() => {
-    return !helpOrders ? 0 : helpOrders.length;
-  }, [helpOrders]); */
+  useEffect(() => {
+    async function loadHelpOrders(id) {
+      try {
+        const response = await api.get(`students/${id}/help-orders`);
 
-  /*   useEffect(() => {
-    console.tron.log(data);
-    setHelpOrders(data);
-  }, []); */
+        const helpOrderList = response.data.map(helpOrder => ({
+          ...helpOrder,
+          withoutAnswer: !helpOrder.answer,
+          dateFormatted: formatRelative(
+            parseISO(helpOrder.created_at),
+            new Date(),
+            {
+              locale: pt,
+              addSuffix: true,
+            }
+          ),
+        }));
 
-  async function handleSubmit() {
-    console.tron.log('handleSubmit', data);
+        setHelpOrders(helpOrderList);
+      } catch (error) {
+        console.tron.error(error);
+      }
+    }
+
+    loadHelpOrders(student.id);
+  }, [student]);
+
+  function handleNewHelpOrder() {
     navigation.navigate('NewHelpOrder');
+  }
+
+  function handleViewAnswer(helpOrder) {
+    navigation.navigate('Answer', { helpOrder });
   }
 
   return (
     <Container>
       <Header />
       <Content>
-        <NewHelpOrderButton onPress={handleSubmit}>
+        <NewHelpOrderButton onPress={handleNewHelpOrder}>
           Novo pedido de auxílio
         </NewHelpOrderButton>
         {countHelpOrders > 0 ? (
@@ -79,7 +76,7 @@ export default function HelpOrder({ navigation }) {
             data={helpOrders}
             keyExtractor={item => String(item.id)}
             renderItem={({ item: helpOrder }) => (
-              <HelpOrder>
+              <HelpOrderButton onPress={() => handleViewAnswer(helpOrder)}>
                 <HelpOrderHeader>
                   <HelpOrderLeft>
                     <Icon
@@ -96,7 +93,7 @@ export default function HelpOrder({ navigation }) {
                   </HelpOrderRightText>
                 </HelpOrderHeader>
                 <HelpOrderQuestion>{helpOrder.question}</HelpOrderQuestion>
-              </HelpOrder>
+              </HelpOrderButton>
             )}
           />
         ) : (

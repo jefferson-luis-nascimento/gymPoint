@@ -12,6 +12,7 @@ export const Content = styled.View`
   flex: 1;
   padding: 20px 10px;
   flex-direction: column;
+  align-self: stretch;
 `;
 
 export const NewCheckinButton = styled(Button)`

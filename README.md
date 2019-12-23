@@ -87,7 +87,7 @@ $> yarn start
 
 
 #### Ambiente Android
-configurar o ambiente de acordo com a documentaço da [Rocketseat](https://docs.rocketseat.dev/ambiente-react-native/introducao)
+Configurar o ambiente de acordo com a documentaço da [Rocketseat](https://docs.rocketseat.dev/ambiente-react-native/introducao)
 
 ### Instalar as dependências do mobile
 ```

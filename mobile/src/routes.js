@@ -39,6 +39,21 @@ export default (isSignedIn = false) =>
           screen: createStackNavigator(
             {
               NewHelpOrder,
+            },
+            {
+              defaultNavigationOptions: {
+                headerTransparent: true,
+                headerTintColor: '#999',
+                headerLeftContainerStyle: {
+                  marginLeft: 20,
+                },
+              },
+            }
+          ),
+        },
+        New1: {
+          screen: createStackNavigator(
+            {
               Answer,
             },
             {

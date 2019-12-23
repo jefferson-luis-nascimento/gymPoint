@@ -28,6 +28,7 @@ export default function NewHelpOrder({ navigation }) {
   return (
     <Container>
       <QuestionInput
+        maxLength={255}
         placeholder="Inclua seu pedido de auxílio"
         value={question}
         onChangeText={setQuestion}

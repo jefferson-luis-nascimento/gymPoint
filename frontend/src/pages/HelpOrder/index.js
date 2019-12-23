@@ -149,6 +149,7 @@ export default function HelpOrder() {
             </ModalTitle>
 
             <ModalInput
+              maxLength={255}
               onChange={e => setAnswer(e.target.value)}
               placeholder="Sua resposta"
             />

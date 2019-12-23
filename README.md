@@ -2,15 +2,16 @@
   <img alt="Gympoint" title="Gympoint" src="gympoint.png" width="200px" />
 </h1>
 
-<h2>Works only in Android OS<h2>
+<h2>Desenvolvido apenas para Android<h2>
 
-<h3 align="left">
-  Rocketseat bootcamp final project. The project is a backend, frontend-web and mobile system.
+<h3>
+  Projeto final do bootcamp da Rocketseat. No projeto foi feito o backend, o frontend-web e o mobile.
 </h3>
 
-<p>Backend: All bussiness logic and persitence;</p>
-<p>Frontend-web: Gym app, managment plans, students, enrollments and help orders;</p>
-<p>Mobile: Student app, the student can do checkins and help orders </p>
+<h2>Funcionalidades:<h2>
+<p>Backend: Todas as regras de negócio e persitência;</p>
+<p>Frontend-web: Aplicativo da academia, realiza a gestão dos alunos, palnos, matriculas e pedidos de auxílio;</p>
+<p>Mobile: Aplicativo do aluno, o aluno pode fazer checkins, pedidos de auxílio e consultar a resposta da academia </p>
 
 <p align="center">
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/jefferson-luis-nascimento/gymPoint?color=%2304D361">
@@ -24,64 +25,75 @@
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Abaixo seguem as intruçõs para baixar e executar o projeto em ambiente de desenvolvimento.
 
-### Prerequisites
-- [Linux Mint 19.02](https://linuxmint.com/release.php?id=35) - Development Operation System.
-- [NodeJS](https://nodejs.org/en/) - Environment runtime.
-- [Yarn](https://yarnpkg.com/en/docs/install) - Packager manager.
-- [Docker](https://docs.docker.com/install/) - Make it easier to create, deploy, and run applications by using containers.
-- [Docker Compose](https://docs.docker.com/compose/install/) - Relies on Docker Engine for any meaningful work, so make sure you have Docker Engine installed either locally or remote, depending on your setup.
-- [Genymotion](https://www.genymotion.com/fun-zone/) - Android emulator.
+## Pre-requisitos
+- [Linux Mint 19.02](https://linuxmint.com/release.php?id=35) - Sistema operacional usado para desenvolvimento.
+- [NodeJS](https://nodejs.org/en/) - Ambiente de execução do projeto.
+- [Yarn](https://yarnpkg.com/en/docs/install) - Gerenciador de pacotes.
+- [Docker](https://docs.docker.com/install/) - Container para testar a aplicação.
+- [Genymotion](https://www.genymotion.com/fun-zone/) - Emulador Android.
 
-What things you need to install the software and how to install them
-
+### Caminho para download do projeto
 ```
 $> git clone https://github.com/jefferson-luis-nascimento/gymPoint.git
 ```
 
-### Installing
+## Instalação
 
-A step by step series of examples that tell you how to get a development env running
+Passo passo de instalação do ambiente de desenvolvimento após feito download:
 
-#### Databases
-First thing you must do is setup all your database settings. To do it, I have created a docker-compose.yml file do help you
+## Databases
+
+### Utilizando o docker, executar os seguintes comandos:
+
 ```
-$> docker-compose up -d
+$> docker run --name database -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres:11
 ```
 
-#### Back-end
-First install back-end dependencies
+```
+$> docker run --name mongobarber -p 27017:27017 -d -t mongo 
+```
+
+```
+$> docker run --name redisbarber -p 6379:6379 -d -t redis:alpine
+```
+
+## Backend
+
+##### Criar o arquivo .env e preencher de acordo com o arquivo .envexmaple
+
+### Instalar as dependências do backend
+
 ```
 $> cd ./backend/ && yarn
 ```
-Start back-end service
+#### Iniciar o servidor
 ```
 $> yarn dev 
 ```
 
-After all dependencies is installed, follow the next steps:
-  -Create a file .env e include values using .envexample reference
-
-#### Front-end
-First install front-end dependencies
+## Frontend-web
+### Instalar as dependências do frontend-web
 ```
 $> cd ./frontend/ && yarn
 ```
-Then run app
+### Executando o aplicativo
 ```
 $> yarn start
 ```
 
-#### Enviroment Android
-Follow the steps from [Rocketseat docs](https://docs.rocketseat.dev/ambiente-react-native/introducao)
-
 #### Mobile
-First install mobile dependencies
+
+
+#### Ambiente Android
+configurar o ambiente de acordo com a documentaço da [Rocketseat](https://docs.rocketseat.dev/ambiente-react-native/introducao)
+
+### Instalar as dependências do mobile
 ```
 $> cd ./mobile/ && yarn
 ```
-Then run app
+### Executando o aplicativo
 ```
 $> react-native run-android
 ```
@@ -89,19 +101,20 @@ $> react-native run-android
 $> react-native start --reset-cache
 ```
 
-#### Built With
+#### Feito com
 
-* [Express](http://www.dropwizard.io/1.0.2/docs/) - A restful API framework
-* [ReactJS](https://pt-br.reactjs.org/) - A front-end library to build user interfaces
-* [React Native](https://facebook.github.io/react-native/) - A mobile library to build native apps to Android and iOS
+* [Express](https://expressjs.com/pt-br/api.html/) - Um framework restful API 
+* [ReactJS](https://pt-br.reactjs.org/) - Uma biblioteca JavaScript para criar interfaces de usuário
+* [React Native](https://facebook.github.io/react-native/docs/getting-started/) - Learn once, write anywhere.
 
-### Authors
+### Desenvolvedor
 
 * **Jefferson Luís Nascimento** - *Full-stack developer* - [GitHub profile](https://github.com/jefferson-luis-nascimento)
 
-## Acknowledgments
+## Conhecimentos usados
 
-* ExpressJS ecossystem
+* Node.js
+* Express
 * MVC design pattern
 * Sequelize ORM
 * Background mail sendling with Redis

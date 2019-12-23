@@ -27,18 +27,42 @@ export default function Header() {
           <div>
             <NavLink
               to="/student"
-              isActive={() => true}
-              activeClassName="linkactive"
+              activeStyle={{
+                fontWeight: 'bold',
+                borderBottom: '1px solid #333',
+                color: '#333',
+              }}
             >
               ALUNOS
             </NavLink>
-            <NavLink to="/plan" activeClassName="linkactive">
+            <NavLink
+              to="/plan"
+              activeStyle={{
+                fontWeight: 'bold',
+                borderBottom: '1px solid #333',
+                color: '#333',
+              }}
+            >
               PLANOS
             </NavLink>
-            <NavLink to="/enrollment" activeClassName="linkactive">
+            <NavLink
+              to="/enrollment"
+              activeStyle={{
+                fontWeight: 'bold',
+                borderBottom: '1px solid #333',
+                color: '#333',
+              }}
+            >
               MATRICULAS
             </NavLink>
-            <NavLink to="/helpOrder" activeClassName="linkactive">
+            <NavLink
+              to="/helpOrder"
+              activeStyle={{
+                fontWeight: 'bold',
+                borderBottom: '1px solid #333',
+                color: '#333',
+              }}
+            >
               PEDIDOS DE AUXÍLIO
             </NavLink>
           </div>

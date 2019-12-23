@@ -54,12 +54,6 @@ export default function Register({ history }) {
     let date = format(new Date(), 'P', { locale: pt });
 
     try {
-      console.tron.log(
-        date,
-        startDate,
-        plan.duration,
-        addMonths(startDate, plan.duration)
-      );
       date = format(addMonths(parseISO(startDate), plan.duration), 'P', {
         locale: pt,
       });

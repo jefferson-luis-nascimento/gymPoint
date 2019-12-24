@@ -217,7 +217,7 @@ export const FormDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0 20px 0 0;
+  padding-right: 10px;
 `;
 
 export const FormDivWithoutPadding = styled(FormDiv)`

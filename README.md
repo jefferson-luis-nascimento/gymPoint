@@ -10,7 +10,7 @@
 
 <h2>Funcionalidades:</h2>
 <p>Backend: Todas as regras de negócio e persitência;</p>
-<p>Frontend-web: Aplicativo da academia, realiza a gestão dos alunos, palnos, matriculas e pedidos de auxílio;</p>
+<p>Frontend-web: Aplicativo da academia, realiza a gestão dos alunos, planos, matriculas e pedidos de auxílio;</p>
 <p>Mobile: Aplicativo do aluno, o aluno pode fazer checkins, pedidos de auxílio e consultar a resposta da academia </p>
 
 <p align="center">
